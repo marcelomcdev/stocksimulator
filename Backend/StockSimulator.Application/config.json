@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "StockSimulatorDB": "Data Source=localhost;Initial Catalog=StockSimulator;Persist Security Info=True; User ID=sa;Password=24092210Mr@"
+  }
+}

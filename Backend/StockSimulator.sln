@@ -15,19 +15,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - Data", "4.1 - Data", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - CrossCutting", "4.2 - CrossCutting", "{17CE732B-38EF-4DE1-896A-B6287CF55812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockSimulator.Application", "StockSimulator.Application\StockSimulator.Application.csproj", "{7679CD4D-20C3-4A89-8E74-68A2B2D8E91E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockSimulator.Application", "StockSimulator.Application\StockSimulator.Application.csproj", "{7679CD4D-20C3-4A89-8E74-68A2B2D8E91E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockSimulator.Domain", "StockSimulator.Domain\StockSimulator.Domain.csproj", "{0E8583C3-5DF5-417F-8295-2CD654805268}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockSimulator.Domain", "StockSimulator.Domain\StockSimulator.Domain.csproj", "{0E8583C3-5DF5-417F-8295-2CD654805268}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockSimulator.Service", "StockSimulator.Service\StockSimulator.Service.csproj", "{2738EEFD-DAFD-4D24-87AB-79D00E928379}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockSimulator.Service", "StockSimulator.Service\StockSimulator.Service.csproj", "{2738EEFD-DAFD-4D24-87AB-79D00E928379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockSimulator.Data", "StockSimulator.Data\StockSimulator.Data.csproj", "{DD20F1DD-61C0-4B83-90BA-9B1A1C96FD06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockSimulator.Data", "StockSimulator.Data\StockSimulator.Data.csproj", "{DD20F1DD-61C0-4B83-90BA-9B1A1C96FD06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockSimulator.CrossCutting", "StockSimulator.CrossCutting\StockSimulator.CrossCutting.csproj", "{5458257D-FEF4-4FD3-92DD-1BF1F5712BE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockSimulator.CrossCutting", "StockSimulator.CrossCutting\StockSimulator.CrossCutting.csproj", "{5458257D-FEF4-4FD3-92DD-1BF1F5712BE2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Tests", "5 - Tests", "{D2031915-B074-4139-9217-22B52690BAE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockSimulator.Tests", "StockSimulator.Tests\StockSimulator.Tests.csproj", "{387C019B-6418-4F28-BBE0-8A64154CD1EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockSimulator.Tests", "StockSimulator.Tests\StockSimulator.Tests.csproj", "{387C019B-6418-4F28-BBE0-8A64154CD1EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{4F48B0FB-06B5-4C60-A72E-22207F90CCC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,7 @@ Global
 		{DD20F1DD-61C0-4B83-90BA-9B1A1C96FD06} = {DD3A84A9-113E-46C0-91C4-ADCE7406D030}
 		{5458257D-FEF4-4FD3-92DD-1BF1F5712BE2} = {17CE732B-38EF-4DE1-896A-B6287CF55812}
 		{387C019B-6418-4F28-BBE0-8A64154CD1EB} = {D2031915-B074-4139-9217-22B52690BAE3}
+		{4F48B0FB-06B5-4C60-A72E-22207F90CCC0} = {D2031915-B074-4139-9217-22B52690BAE3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E245E76F-9F6C-460A-8D5D-C6DDC9DE9C35}
