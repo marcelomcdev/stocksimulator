@@ -1,6 +1,6 @@
 # Stock Simulator
 Stock buy and sell simulator
 
-# Instalação das dependências
-To start this project, use the <code>dotnet restore</code> to restore dependencies and tools in the backend project.
+# Dependencies and tools installation
+Before you start, using a command line software (like Windows Powershell as example), on the backend's folder, use the <code>dotnet restore</code> command to restore the existing dependencies and tools.
 
