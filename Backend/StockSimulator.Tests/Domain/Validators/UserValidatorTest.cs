@@ -74,7 +74,6 @@ namespace StockSimulator.Tests.Domain.Validators
         public void Should_have_error_when_name_is_gt_100()
         {
             var name = "A".PadRight(101, 'a');
-            var total = name.Length;
             var model = new User() { Name = name };
             ValidateName(model,true);
         }
