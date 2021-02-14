@@ -4,7 +4,12 @@ using System.Text;
 
 namespace StockSimulator.Domain.Entities
 {
-    class Operation
+    public class Operation : BaseEntity
     {
+        public int AccountId { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public int OperationType { get; set; }
     }
 }

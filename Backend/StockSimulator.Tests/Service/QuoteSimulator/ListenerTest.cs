@@ -7,6 +7,7 @@ using System.Text;
 
 namespace StockSimulator.Tests.Service.QuoteSimulator
 {
+    [TestFixture]
     public class ListenerTest
     {
         const string url = "ws://localhost:8080/quotes";
