@@ -1,0 +1,122 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+namespace StockSimulator.Service.QuoteSimulator
+{
+    public class Listener
+    {
+        public void StopListening()
+        {
+            this.src.Cancel();
+        }
+
+        public dynamic Item { get; set; }
+        public List<dynamic> Items { get; set; }
+
+        private Task listenTask;
+        private CancellationTokenSource src = new CancellationTokenSource();
+
+        public async Task<dynamic> Listen(string url, string filter)
+        {
+            if (String.IsNullOrEmpty(filter) || String.IsNullOrWhiteSpace(filter))
+                throw new Exception("A filter is required.");
+
+            if (String.IsNullOrEmpty(url) || String.IsNullOrWhiteSpace(url))
+                throw new Exception("A url is required");
+
+            ClientWebSocket socket = new ClientWebSocket();
+            listenTask = Task.Run(async () =>
+            {
+                try
+                {
+                    bool notFound = true;
+                    byte[] buffer = new byte[1024];
+                    await socket.ConnectAsync(new Uri(url), CancellationToken.None);
+                    while (notFound)
+                    {
+                        WebSocketReceiveResult result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+                        string data = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+                        if (data.Contains(filter))
+                        {
+                            var obj = JsonConvert.DeserializeObject(data);
+                            var quote = ConvertToQuote(obj);
+
+                            Item = quote;
+                            notFound = false;
+                        }
+
+                        Console.WriteLine(data);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //treat exception
+                }
+            }, src.Token);
+
+            return Item;
+            // listenTask;
+        }
+
+
+        //public async Task<dynamic> Listen(string url, List<string> filters)
+        //{
+        //    ClientWebSocket socket = new ClientWebSocket();
+        //    listenTask = Task.Run(async () =>
+        //    {
+        //        try
+        //        {
+        //            Items = new List<dynamic>();
+        //            bool notFound = true;
+        //            byte[] buffer = new byte[1024];
+        //            await socket.ConnectAsync(new Uri(url), CancellationToken.None);
+        //            while (notFound)
+        //            {
+        //                WebSocketReceiveResult result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+        //                string data = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                        
+        //                if (filters.Any(x => data.Contains(x)) && !Items.Any(x=> data.Contains(x)))
+        //                {
+        //                    Item = data;
+        //                    Items.Add(Item);
+        //                    if(Items.Count() == filters.Count())
+        //                    {
+        //                        notFound = false;
+        //                    }
+                            
+        //                }
+
+        //                Console.WriteLine(data);
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            //return "";
+        //            //treat exception
+        //        }
+        //    }, src.Token);
+
+        //    return Items;
+        //    // listenTask;
+        //}
+
+        public StockSimulator.Domain.Entities.Quote ConvertToQuote(object obj)
+        {
+            var obj2 = obj.ToString().Replace(":", "").Replace("\r\n", "").Replace("{", "").Replace("}", "").Trim().Split("\"");
+            StockSimulator.Domain.Entities.Quote quote = new Domain.Entities.Quote();
+            quote.Name = obj2[1];
+            quote.Value = decimal.Parse(obj2[2]);
+            var timestamp = Math.Round(decimal.Parse(obj2[4].ToString().Trim().Replace(".", ",")), 0);
+            quote.Timestamp = StockSimulator.CrossCutting.Utils.Converters.UnixTimeStampToDateTime((double)timestamp);
+            return quote;
+        }
+
+    }
+}
