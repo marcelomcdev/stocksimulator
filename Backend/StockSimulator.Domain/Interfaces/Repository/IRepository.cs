@@ -11,12 +11,9 @@ namespace StockSimulator.Domain.Interfaces.Repository
         void Update(TEntity entity);
         void Delete(int id);
         void Delete(Expression<Func<TEntity, bool>> predicate);
-        void DeleteList(Expression<Func<TEntity, bool>> predicate);
-        TEntity GetById(int id);
+        TEntity FindById(int id);
         IEnumerable<TEntity> GetAll();
         IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
-        int GetCount(Expression<Func<TEntity, bool>> predicate);
-        int GetCount();
         void Dispose();
         void Commit();
         void DetachAllEntities();
