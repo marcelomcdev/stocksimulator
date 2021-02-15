@@ -9,24 +9,24 @@ using System.Linq.Expressions;
 
 namespace StockSimulator.Data.Repository
 {
-    public class OperationRepository : Repository<Operation>, IOperationRepository
+    public class AccountRepository : Repository<Account>, IAccountRepository
     {
         private readonly StockContext context;
 
-        public OperationRepository(StockContext _context) : base(_context)
+        public AccountRepository(StockContext _context) : base(_context)
         {
             context = _context;
         }
 
-        public override IQueryable<Operation> FindBy(Expression<Func<Operation, bool>> predicate)
+        public override IQueryable<Account> FindBy(Expression<Func<Account, bool>> predicate)
         {
-            IQueryable<Operation> query = context.Operations; //.Include("Accounts");
+            IQueryable<Account> query = context.Accounts.Include("Operations");
             return query.Where(predicate);
         }
 
-        public override IEnumerable<Operation> GetAll()
+        public override IEnumerable<Account> GetAll()
         {
-            return context.Operations.Include("Accounts").AsNoTracking().OrderBy(x => x.Name);
+            return context.Accounts.Include("Operations").AsNoTracking().OrderBy(x => x.Name);
         }
     }
 }

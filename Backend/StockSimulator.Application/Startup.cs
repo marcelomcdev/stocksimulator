@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using StockSimulator.Data.Context;
+using StockSimulator.Data.Repository;
+using StockSimulator.Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +38,11 @@ namespace StockSimulator.Application
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             var connectionString = Configuration.GetConnectionString("StockSimulatorDB");
             services.AddDbContext<StockContext>(option => option.UseSqlServer(connectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IOperationRepository, OperationRepository>();
+            
             services.AddControllers();
         }
 
