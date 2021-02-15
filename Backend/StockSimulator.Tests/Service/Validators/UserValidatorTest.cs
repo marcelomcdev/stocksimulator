@@ -98,6 +98,18 @@ namespace StockSimulator.Tests.Service.Validators
             Validate(model, u => u.Email);
         }
 
+        [Test]
+        public void Should_have_error_when_email_is_lt_3()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void Should_have_error_when_email_is_gt_150()
+        {
+            Assert.Fail();
+        }
+
         #endregion
 
         #region Password Validation

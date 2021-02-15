@@ -5,13 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
-    <Folder Include="Mapping\" />
     <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StockSimulator.Domain\StockSimulator.Domain.csproj" />
   </ItemGroup>
 
 </Project>

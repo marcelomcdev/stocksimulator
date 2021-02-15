@@ -8,7 +8,7 @@ namespace StockSimulator.Service.Validators
         public UserValidator()
         {
             RuleFor(x => x.Name).NotNull().NotEmpty().Length(3, 100);
-            RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress(FluentValidation.Validators.EmailValidationMode.AspNetCoreCompatible);
+            RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress(FluentValidation.Validators.EmailValidationMode.AspNetCoreCompatible).Length(1,150);
             RuleFor(x => x.Password).NotNull().NotEmpty().Length(8, 20);
         }
     }

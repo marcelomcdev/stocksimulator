@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StockSimulator.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +34,8 @@ namespace StockSimulator.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            //var connectionString = Configuration.GetConnectionString("StockSimulatorDB");
-            //services.AddDbContext<StockSimulatorContext>(option => option.UseSqlServer(connectionString, m => m.MigrationsAssembly("StockSimulator.Repository")));
+            var connectionString = Configuration.GetConnectionString("StockSimulatorDB");
+            services.AddDbContext<StockContext>(option => option.UseSqlServer(connectionString, m => m.MigrationsAssembly("StockSimulator.Repository")));
             services.AddControllers();
         }
 
@@ -45,12 +47,6 @@ namespace StockSimulator.Application
                 app.UseDeveloperExceptionPage();
             }
 
-//#if NoOptions
-//            #region UseWebSockets
-//            app.UseWebSockets();
-//            #endregion
-//#endif
-//#if UseOptions
             #region UseWebSocketsOptions
             var webSocketOptions = new WebSocketOptions()
             {
@@ -59,7 +55,6 @@ namespace StockSimulator.Application
             };
             app.UseWebSockets(webSocketOptions);
             #endregion
-//#endif
 
             #region Accept Websocket
 
