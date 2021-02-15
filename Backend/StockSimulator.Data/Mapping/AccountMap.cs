@@ -11,6 +11,7 @@ namespace StockSimulator.Data.Mapping
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Name).IsRequired().HasMaxLength(20).HasColumnType("varchar");
             builder.Property(a => a.UserId).IsRequired();
+            builder.Property(a => a.TotalBalance).IsRequired().HasColumnType("decimal(10,2)");
 
             builder
                 .HasMany(a => a.Operations)
