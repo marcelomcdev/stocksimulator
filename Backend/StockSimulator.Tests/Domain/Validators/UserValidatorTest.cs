@@ -17,32 +17,13 @@ namespace StockSimulator.Tests.Domain.Validators
 
         #region Related functions
 
-        private void ValidateName(User model, bool shouldHaveError = false)
+        private void Validate(User model, System.Linq.Expressions.Expression<System.Func<User,string>> expression, bool shouldHaveError = false)
         {
             var result = validator.TestValidate(model);
             if (shouldHaveError)
-                result.ShouldHaveValidationErrorFor(u => u.Name);
+                result.ShouldHaveValidationErrorFor(expression);
             else
-                result.ShouldNotHaveValidationErrorFor(u => u.Name);
-        }
-
-        private void ValidateEmail(User model, bool shouldHaveError = false)
-        {
-            var result = validator.TestValidate(model);
-            if (shouldHaveError)
-                result.ShouldHaveValidationErrorFor(u => u.Email);
-            else
-                result.ShouldNotHaveValidationErrorFor(u => u.Email);
-        }
-
-        private void ValidatePassword(User model, bool shouldHaveError = false)
-        {
-            var result = validator.TestValidate(model);
-            if (shouldHaveError)
-                result.ShouldHaveValidationErrorFor(u => u.Password);
-            else
-                result.ShouldNotHaveValidationErrorFor(u => u.Password);
-
+                result.ShouldNotHaveValidationErrorFor(expression);
         }
 
         #endregion
@@ -53,21 +34,21 @@ namespace StockSimulator.Tests.Domain.Validators
         public void Should_have_error_when_name_is_null()
         {
             var model = new User() { Name = null };
-            ValidateName(model,true);
+            Validate(model, u => u.Name, true);
         }
 
         [Test]
         public void Should_have_error_when_name_is_empty()
         {
             var model = new User() { Name = string.Empty };
-            ValidateName(model,true);
+            Validate(model, u => u.Name, true);
         }
 
         [Test]
         public void Should_have_error_when_name_is_lt_3()
         {
             var model = new User() { Name = "AB" };
-            ValidateName(model,true);
+            Validate(model, u => u.Name, true);
         }
 
         [Test]
@@ -75,14 +56,14 @@ namespace StockSimulator.Tests.Domain.Validators
         {
             var name = "A".PadRight(101, 'a');
             var model = new User() { Name = name };
-            ValidateName(model,true);
+            Validate(model, u => u.Name, true);
         }
 
         [Test]
         public void Should_have_pass_when_name_has_met_all_requirements()
         {
             var model = new User() { Name = "Gabriela de Souza Pereira" };
-            ValidateName(model);
+            Validate(model, u => u.Name);
         }
 
         #endregion
@@ -93,28 +74,28 @@ namespace StockSimulator.Tests.Domain.Validators
         public void Should_have_error_when_email_is_null()
         {
             var model = new User() { Email = null };
-            ValidateEmail(model,true);
+            Validate(model, u => u.Email, true);
         }
 
         [Test]
         public void Should_have_error_when_email_is_empty()
         {
             var model = new User() { Email = "" };
-            ValidateEmail(model,true);
+            Validate(model, u => u.Email, true);
         }
 
         [Test]
         public void Should_have_error_when_email_has_an_invalid_format()
         {
             var model = new User() { Email = "marcelo.castro" };
-            ValidateEmail(model,true);
+            Validate(model, u => u.Email, true);
         }
 
         [Test]
         public void Should_have_a_valid_mail()
         {
             var model = new User() { Email = "marcelo.developer@outlook.com" };
-            ValidateEmail(model);
+            Validate(model, u => u.Email);
         }
 
         #endregion
@@ -124,35 +105,35 @@ namespace StockSimulator.Tests.Domain.Validators
         public void Should_have_error_when_password_is_null()
         {
             var model = new User() { Password = null };
-            ValidatePassword(model, true);
+            Validate(model, u => u.Password, true);
         }
 
         [Test]
         public void Should_have_error_when_password_is_empty()
         {
             var model = new User() { Password = "" };
-            ValidatePassword(model, true);
+            Validate(model, u => u.Password, true);
         }
 
         [Test]
         public void Should_have_error_when_password_is_lt_8_characters()
         {
             var model = new User() { Password = "258s596" };
-            ValidatePassword(model, true);
+            Validate(model, u => u.Password, true);
         }
 
         [Test]
         public void Should_have_error_when_password_is_gt_20_characters()
         {
             var model = new User() { Password = "35s89z67s8xsdfr56s549" };
-            ValidatePassword(model, true);
+            Validate(model, u => u.Password, true);
         }
 
         [Test]
         public void Should_have_pass_when_password_has_met_all_requirements()
         {
             var model = new User() { Password = "1253d58s9a12r456s8" };
-            ValidatePassword(model);
+            Validate(model, u => u.Password);
         }
 
         #endregion

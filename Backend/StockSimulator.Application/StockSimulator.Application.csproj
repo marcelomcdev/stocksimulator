@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StockSimulator.Domain\StockSimulator.Domain.csproj" />
     <ProjectReference Include="..\StockSimulator.Service\StockSimulator.Service.csproj" />
   </ItemGroup>
 

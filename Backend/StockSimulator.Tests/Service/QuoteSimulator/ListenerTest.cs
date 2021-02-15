@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using StockSimulator.Domain.Entities;
+using StockSimulator.Domain.ValuableObjects;
 using StockSimulator.Service.QuoteSimulator;
 using System;
 using System.Collections.Generic;

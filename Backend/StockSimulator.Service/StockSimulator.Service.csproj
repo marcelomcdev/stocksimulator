@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StockSimulator.CrossCutting\StockSimulator.CrossCutting.csproj" />
+    <ProjectReference Include="..\StockSimulator.Data\StockSimulator.Data.csproj" />
     <ProjectReference Include="..\StockSimulator.Domain\StockSimulator.Domain.csproj" />
   </ItemGroup>
 

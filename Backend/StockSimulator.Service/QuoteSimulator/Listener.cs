@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using StockSimulator.Domain.ValuableObjects;
 
 namespace StockSimulator.Service.QuoteSimulator
 {
@@ -42,16 +43,13 @@ namespace StockSimulator.Service.QuoteSimulator
                     {
                         WebSocketReceiveResult result = await socket.ReceiveAsync(buffer, CancellationToken.None);
                         string data = Encoding.UTF8.GetString(buffer, 0, result.Count);
-
                         if (data.Contains(filter))
                         {
                             var obj = JsonConvert.DeserializeObject(data);
                             var quote = ConvertToQuote(obj);
-
                             Item = quote;
                             notFound = false;
                         }
-
                         Console.WriteLine(data);
                     }
                 }
@@ -62,7 +60,6 @@ namespace StockSimulator.Service.QuoteSimulator
             }, src.Token);
 
             return Item;
-            // listenTask;
         }
 
 
@@ -107,10 +104,10 @@ namespace StockSimulator.Service.QuoteSimulator
         //    // listenTask;
         //}
 
-        public StockSimulator.Domain.Entities.Quote ConvertToQuote(object obj)
+        public Quote ConvertToQuote(object obj)
         {
             var obj2 = obj.ToString().Replace(":", "").Replace("\r\n", "").Replace("{", "").Replace("}", "").Trim().Split("\"");
-            StockSimulator.Domain.Entities.Quote quote = new Domain.Entities.Quote();
+            Quote quote = new Quote();
             quote.Name = obj2[1];
             quote.Value = decimal.Parse(obj2[2]);
             var timestamp = Math.Round(decimal.Parse(obj2[4].ToString().Trim().Replace(".", ",")), 0);
