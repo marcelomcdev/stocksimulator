@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
@@ -12,6 +13,10 @@
     <ProjectReference Include="..\StockSimulator.CrossCutting\StockSimulator.CrossCutting.csproj" />
     <ProjectReference Include="..\StockSimulator.Data\StockSimulator.Data.csproj" />
     <ProjectReference Include="..\StockSimulator.Domain\StockSimulator.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -21,6 +21,12 @@
     <ProjectReference Include="..\StockSimulator.CrossCutting\StockSimulator.CrossCutting.csproj" />
     <ProjectReference Include="..\StockSimulator.Domain\StockSimulator.Domain.csproj" />
     <ProjectReference Include="..\StockSimulator.Service\StockSimulator.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="Infra\Data\" />
+    <Folder Include="Infra\CrossCutting\" />
   </ItemGroup>
 
 </Project>

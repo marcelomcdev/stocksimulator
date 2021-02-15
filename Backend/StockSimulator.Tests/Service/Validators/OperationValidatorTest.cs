@@ -1,9 +1,9 @@
 ﻿using FluentValidation.TestHelper;
 using NUnit.Framework;
 using StockSimulator.Domain.Entities;
-using StockSimulator.Domain.Validators;
+using StockSimulator.Service.Validators;
 
-namespace StockSimulator.Tests.Domain.Validators
+namespace StockSimulator.Tests.Service.Validators
 {
     [TestFixture]
     public class OperationValidatorTest

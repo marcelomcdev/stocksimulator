@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using StockSimulator.Domain.Entities;
 
-namespace StockSimulator.Domain.Validators
+namespace StockSimulator.Service.Validators
 {
     public class UserValidator : AbstractValidator<User>
     {
