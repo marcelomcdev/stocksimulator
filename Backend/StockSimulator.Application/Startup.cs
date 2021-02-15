@@ -35,7 +35,7 @@ namespace StockSimulator.Application
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             var connectionString = Configuration.GetConnectionString("StockSimulatorDB");
-            services.AddDbContext<StockContext>(option => option.UseSqlServer(connectionString, m => m.MigrationsAssembly("StockSimulator.Repository")));
+            services.AddDbContext<StockContext>(option => option.UseSqlServer(connectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
             services.AddControllers();
         }
 

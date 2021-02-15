@@ -16,7 +16,9 @@ namespace StockSimulator.Data.Mapping
             builder.Property(u => u.Email).IsRequired().HasMaxLength(150).HasColumnType("varchar");
             builder.Property(u => u.Password).IsRequired().HasMaxLength(20).HasColumnType("varchar");
 
-            builder.HasMany(u => u.Accounts).WithOne(u => u.User);
+            builder
+                .HasMany(u => u.Accounts)
+                .WithOne(u => u.User);
         }
     }
 }

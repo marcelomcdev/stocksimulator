@@ -13,7 +13,7 @@ namespace StockSimulator.Data.Mapping
         {
             builder.HasKey(o => o.Id);
             builder.Property(o => o.Name).IsRequired().HasMaxLength(50).HasColumnType("varchar");
-            builder.Property(o => o.Price).IsRequired().HasColumnType("decimal");
+            builder.Property(o => o.Price).IsRequired().HasColumnType("decimal(10,2)");
             builder.Property(o => o.Quantity).IsRequired().HasColumnType("int");
             builder.Property(o => o.OperationType).IsRequired().HasColumnType("int");
         }
