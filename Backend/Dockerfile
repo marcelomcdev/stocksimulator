@@ -18,5 +18,6 @@ RUN dotnet publish "StockSimulator.Application.csproj" -c Release -o /app/publis
 
 FROM base AS final
 WORKDIR /app
+ENV DB_ENV='localhost'
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "StockSimulator.Application.dll"]

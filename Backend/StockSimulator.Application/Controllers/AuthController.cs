@@ -7,6 +7,8 @@ using StockSimulator.Application.Security;
 using StockSimulator.Application.ViewModels;
 using StockSimulator.CrossCutting.Configuration;
 using StockSimulator.Domain.Entities;
+using StockSimulator.Domain.Interfaces.Repository;
+using StockSimulator.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -23,12 +25,14 @@ namespace StockSimulator.Application.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly GeneralConfig _generalConfig;
+        private readonly IAccountService _accountService;
 
-        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<GeneralConfig> generalConfig)
+        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<GeneralConfig> generalConfig, IAccountService accountService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _generalConfig = generalConfig.Value;
+            _accountService = accountService;
         }
 
         [HttpPost("sign_up")]
@@ -48,6 +52,8 @@ namespace StockSimulator.Application.Controllers
 
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
+            else
+                _accountService.InsertIdentity(new Account() { UserId = user.Id, Name = "Minha Conta", TotalBalance = 0 });
 
             await _signInManager.SignInAsync(user, false);
             return Ok(await GenerateJwt(registerUser.Email));

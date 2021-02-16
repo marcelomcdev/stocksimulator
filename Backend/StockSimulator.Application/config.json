@@ -1,6 +1,7 @@
 {
   "ConnectionStrings": {
-    "StockSimulatorDB": "Data Source=localhost;Initial Catalog=StockSimulator;Persist Security Info=True; User ID=sa;Password=24092210Mr@"
+    "StockSimulatorDB": "Data Source=[DB_ENV];Initial Catalog=StockSimulator;Persist Security Info=True; User ID=sa;Password=24092210Mr@"
+    //"StockSimulatorDB": "Data Source=localhost;Initial Catalog=StockSimulator;Persist Security Info=True; User ID=sa;Password=24092210Mr@"
   },
   "GeneralConfig": {
     "Secret": "5B608423C1614A4A9C1ED9B3D4E6F78C",

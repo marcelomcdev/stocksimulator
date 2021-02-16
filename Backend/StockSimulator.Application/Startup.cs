@@ -40,6 +40,14 @@ namespace StockSimulator.Application
             Configuration = builder.Build();
         }
 
+        private string ConnectionString { 
+            get 
+            {
+                var conn = Configuration.GetConnectionString("StockSimulatorDB");
+                return conn.Replace("[DB_ENV]", System.Environment.GetEnvironmentVariable("DB_ENV"));
+            } 
+        }
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -47,7 +55,7 @@ namespace StockSimulator.Application
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddDbContext<StockContext>(option => option.UseSqlServer(Configuration.GetConnectionString("StockSimulatorDB"), m => m.MigrationsAssembly("StockSimulator.Data")));
+            services.AddDbContext<StockContext>(option => option.UseSqlServer(ConnectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
 
             #region Identity
 
