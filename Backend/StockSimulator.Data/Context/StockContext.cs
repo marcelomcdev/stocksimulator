@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StockSimulator.Data.Mapping;
 using StockSimulator.Domain.Entities;
 
 namespace StockSimulator.Data.Context
 {
-    public class StockContext : DbContext
+    public class StockContext : IdentityDbContext
     {
         public StockContext(DbContextOptions options) : base(options) { }
 

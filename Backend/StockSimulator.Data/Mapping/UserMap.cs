@@ -10,11 +10,11 @@ namespace StockSimulator.Data.Mapping
         {
             //builder.ToTable("Users");
            
-            builder.HasKey(u => u.Id);
+            //builder.HasKey(u => u.Id);
             //builder.Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Property(u => u.Name).IsRequired().HasMaxLength(100).HasColumnType("varchar");
-            builder.Property(u => u.Email).IsRequired().HasMaxLength(150).HasColumnType("varchar");
-            builder.Property(u => u.Password).IsRequired().HasMaxLength(20).HasColumnType("varchar");
+            builder.Property(u => u.Name).IsRequired().HasMaxLength(100).HasColumnType("varchar(100)");
+            builder.Property(u => u.Email).IsRequired().HasMaxLength(150).HasColumnType("varchar(150)");
+            builder.Property(u => u.Password).IsRequired().HasMaxLength(20).HasColumnType("varchar(20)");
 
             builder
                 .HasMany(u => u.Accounts)

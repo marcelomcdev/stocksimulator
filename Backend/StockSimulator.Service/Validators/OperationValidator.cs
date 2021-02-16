@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using StockSimulator.Domain.Entities;
+using static StockSimulator.Domain.Enums.Enumerators;
 
 namespace StockSimulator.Service.Validators
 {
@@ -10,7 +11,6 @@ namespace StockSimulator.Service.Validators
             RuleFor(x => x.Id).NotNull();
             RuleFor(x => x.Name).NotNull().NotEmpty().Length(3, 50);
             RuleFor(x => x.Quantity).GreaterThan(0);
-            RuleFor(x => x.OperationType).InclusiveBetween((int)Domain.Enums.Enumerators.OperationTypeEnum.Buy, (int)Domain.Enums.Enumerators.OperationTypeEnum.Sell);
         }
     }
 }

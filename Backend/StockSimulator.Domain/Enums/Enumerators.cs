@@ -8,6 +8,7 @@ namespace StockSimulator.Domain.Enums
     {
         public enum OperationTypeEnum
         {
+            None = 0,
             Buy = 1,
             Sell = 2
         }

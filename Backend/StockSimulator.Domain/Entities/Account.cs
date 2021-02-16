@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace StockSimulator.Domain.Entities
 {
@@ -8,7 +6,7 @@ namespace StockSimulator.Domain.Entities
     {
         public string Name { get; set; }
         public decimal TotalBalance { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public virtual User User { get; set; }
 
         public virtual ICollection<Operation> Operations { get; set; }

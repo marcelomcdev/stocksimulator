@@ -9,7 +9,7 @@ namespace StockSimulator.Data.Mapping
         public void Configure(EntityTypeBuilder<Account> builder)
         {
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.Name).IsRequired().HasMaxLength(20).HasColumnType("varchar");
+            builder.Property(a => a.Name).IsRequired().HasMaxLength(20).HasColumnType("varchar(20)");
             builder.Property(a => a.UserId).IsRequired();
             builder.Property(a => a.TotalBalance).IsRequired().HasColumnType("decimal(10,2)");
 

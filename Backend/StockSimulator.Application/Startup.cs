@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,13 +11,22 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using StockSimulator.Data.Context;
 using StockSimulator.Data.Repository;
+using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Repository;
+using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using StockSimulator.Application.Helpers.Identity;
+using StockSimulator.CrossCutting.Configuration;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace StockSimulator.Application
 {
@@ -36,13 +46,67 @@ namespace StockSimulator.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            var connectionString = Configuration.GetConnectionString("StockSimulatorDB");
-            services.AddDbContext<StockContext>(option => option.UseSqlServer(connectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
+
+            services.AddDbContext<StockContext>(option => option.UseSqlServer(Configuration.GetConnectionString("StockSimulatorDB"), m => m.MigrationsAssembly("StockSimulator.Data")));
+
+            #region Identity
+
+            services.AddIdentity<User, IdentityRole>(options=>
+                    {
+                        options.Password.RequiredLength = 8;
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireDigit = false;
+                        options.User.RequireUniqueEmail = true;
+                        options.User.AllowedUserNameCharacters = string.Empty;
+                    })
+                    .AddRoles<IdentityRole>()
+                    .AddErrorDescriber<LocalizedIdentityErrorDescriber>()
+                    .AddEntityFrameworkStores<StockContext>()
+                    .AddDefaultTokenProviders();
+
+            #endregion Identity
+
+            #region JWT Bearer Security
+            // JWT
+            var appSettingsSection = Configuration.GetSection("GeneralConfig");
+            services.Configure<GeneralConfig>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<GeneralConfig>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x => 
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudiences = appSettings.ValidIn,
+                    ValidIssuer = appSettings.Issuer
+                };
+            });
+            
+            #endregion
+
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountService, AccountService>();
+
             services.AddScoped<IOperationRepository, OperationRepository>();
-            
+            services.AddScoped<IOperationService, OperationService>();
+
             services.AddControllers();
         }
 
@@ -89,6 +153,8 @@ namespace StockSimulator.Application
             app.UseHttpsRedirection();
             
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

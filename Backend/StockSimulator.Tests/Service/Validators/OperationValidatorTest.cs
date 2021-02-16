@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using StockSimulator.Domain.Entities;
 using StockSimulator.Service.Validators;
+using static StockSimulator.Domain.Enums.Enumerators;
 
 namespace StockSimulator.Tests.Service.Validators
 {
@@ -27,6 +28,15 @@ namespace StockSimulator.Tests.Service.Validators
         }
 
         private void Validate(Operation model, System.Linq.Expressions.Expression<System.Func<Operation, int>> expression, bool shouldHaveError = false)
+        {
+            var result = validator.TestValidate(model);
+            if (shouldHaveError)
+                result.ShouldHaveValidationErrorFor(expression);
+            else
+                result.ShouldNotHaveValidationErrorFor(expression);
+        }
+
+        private void Validate(Operation model, System.Linq.Expressions.Expression<System.Func<Operation, OperationTypeEnum>> expression, bool shouldHaveError = false)
         {
             var result = validator.TestValidate(model);
             if (shouldHaveError)
@@ -101,33 +111,17 @@ namespace StockSimulator.Tests.Service.Validators
         #region Operation Type Validation
 
         [Test]
-        public void Should_have_error_when_operation_type_is_zero()
-        {
-            var model = new Operation() { OperationType = 0 };
-            Validate(model, x => x.OperationType, true);
-        }
-
-        [Test]
         public void Should_pass_when_quantity_is_equals_buy()
         {
-            var model = new Operation() { OperationType = 1 };
+            var model = new Operation() { OperationType = OperationTypeEnum.Buy };
             Validate(model, x => x.OperationType, false);
         }
-
 
         [Test]
         public void Should_pass_when_quantity_is_equals_sell()
         {
-            var model = new Operation() { OperationType = 2 };
+            var model = new Operation() { OperationType = OperationTypeEnum.Sell };
             Validate(model, x => x.OperationType, false);
-        }
-
-
-        [Test]
-        public void Should_have_error_when_operation_type_is_out_of_range()
-        {
-            var model = new Operation() { OperationType = 3 };
-            Validate(model, x => x.OperationType, true);
         }
 
         #endregion
