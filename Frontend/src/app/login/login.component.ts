@@ -23,13 +23,13 @@ export class LoginComponent implements OnInit {
     this.user = new User();
   }
 
-  entrar() {
+  signIn() {
     this.activate_spinner = true;
     this.userService.verifyUser(this.user)
     .subscribe(
       user_json => {
 
-        this.userService.usuario = user_json;
+        this.userService.user = user_json;
 
         if(this.returnUrl == null) {
           this.router.navigate(['/']);

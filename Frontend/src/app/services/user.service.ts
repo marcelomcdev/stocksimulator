@@ -10,49 +10,49 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private baseURL: string;
-  private _usuario: User;
+  private _user: User;
 
-  get usuario(): User {
-    let usuario_json = sessionStorage.getItem('usuario-autenticado');
-    this._usuario = JSON.parse(usuario_json);
-    return this._usuario;
+  get user(): User {
+    let user_json = sessionStorage.getItem('user-authenticated');
+    this._user = JSON.parse(user_json);
+    return this._user;
   }
 
-  set usuario(usuario: User){
-    sessionStorage.setItem('usuario-autenticado', JSON.stringify(usuario));
-    this._usuario = usuario;
+  set user(user: User){
+    sessionStorage.setItem('user-authenticated', JSON.stringify(user));
+    this._user = user;
   }
 
-  public usuario_autenticado(): boolean {
-    return this._usuario != null && this._usuario.email != '' && this._usuario.password != '';
+  public user_authenticated(): boolean {
+    return this._user != null && this._user.email != '' && this._user.password != '';
   }
 
-  public limpar_sessao(){
-    sessionStorage.setItem('usuario-autenticado','');
-    this._usuario = null;
+  public clean_session(){
+    sessionStorage.setItem('user-authenticated','');
+    this._user = null;
   }
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseURL = baseUrl;
   }
 
-  public verifyUser(usuario: User) : Observable<User> {
+  public verifyUser(user: User) : Observable<User> {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     const body = {
-      email: usuario.email,
-      senha: usuario.password
+      email: user.email,
+      senha: user.password
     }
 
-    return this.http.post<User>(`${this.baseURL}api/usuario/VerificarUsuario` , body, { headers })
+    return this.http.post<User>(`${this.baseURL}api/auth/sign_in` , body, { headers })
   }
 
-  public cadastrarUsuario(usuario: User) : Observable<User> {
+  public createUser(user: User) : Observable<User> {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     const body = {
-      email: usuario.email,
-      senha: usuario.password,
-      nome: usuario.username,
-      cpf: usuario.cpf
+      email: user.email,
+      senha: user.password,
+      nome: user.username,
+      cpf: user.cpf
     }
 
     return this.http.post<User>(this.baseURL + 'api/auth', body, {headers});

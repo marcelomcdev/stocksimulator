@@ -1,9 +1,6 @@
 <div class="text-center">
   <form class="form-signin">
 
-    <img src="https://trello-attachments.s3.amazonaws.com/5ea4c8deb25391266fc2f294/5fa05dd81c93228750da4441/a44c5b5a48b341b5f3eab7d02b8c386a/image.png" alt="">
-    <!-- <img src="../../../assets/quickbuy-logo.png" title="titulo" alt="quick-buy" class="mb-4"> -->
-
     <h1 class="h4 mb-2 login">Login do Cliente</h1>
 
     <label for="inputEmail" class="sr-only">Email</label>
@@ -15,7 +12,7 @@
               'is-invalid':email.invalid && (email.dirty || email.touched),
               'is-valid': email.valid && (email.dirty || email.touched)
             }"
-            [(ngModel)]="usuario.email"
+            [(ngModel)]="user.email"
             #email="ngModel"
             email
             required
@@ -32,34 +29,31 @@
 
     <label for="inputSenha" class="sr-only">Senha</label>
     <input type="password" id="inputSenha"
-    name="senha" placeholder="Senha"
+    name="password" placeholder="Senha"
     class="form-control mb-2"
-    #senha="ngModel"
+    #password="ngModel"
     [ngClass] = "{
-      'is-invalid':senha.invalid && (senha.dirty || senha.touched),
-      'is-valid': senha.valid && (senha.dirty || senha.touched)
+      'is-invalid':password.invalid && (password.dirty || password.touched),
+      'is-valid': password.valid && (password.dirty || password.touched)
     }"
-    [(ngModel)]="usuario.senha"
+    [(ngModel)]="user.password"
     required
     >
 
-    <div class="invalid-feedback mb-2" *ngIf="senha.invalid && (senha.dirty || senha.touched)">
-      <div *ngIf="senha.errors.required">
+    <div class="invalid-feedback mb-2" *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div *ngIf="password.errors.required">
         Senha deve ser preenchida!
       </div>
-      <!-- <div *ngIf="senha.errors.email">
-        E-mail não está no formato correto!
-      </div> -->
     </div>
 
-    <button class="btn btn-primary btn-block mb-3" type="submit" (click)="entrar()" [disabled]="ativar_spinner">
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="ativar_spinner"></span>
+    <button class="btn btn-primary btn-block mb-3" type="submit" (click)="signIn()" [disabled]="activate_spinner">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="activate_spinner"></span>
       <span class="sr-only">Loading...</span>
       Entrar
     </button>
 
     <div>
-      Novo por aqui? <a [routerLink]='["/novo-usuario"]'>Cadastre-se</a>
+      Novo por aqui? <a [routerLink]='["/new-user"]'>Cadastre-se</a>
     </div>
 
     <div class="alert alert-danger" *ngIf="mensagem">
