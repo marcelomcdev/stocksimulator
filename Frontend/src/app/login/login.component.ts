@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   public returnUrl: string;
   public message: string;
   usuarioAutenticado: boolean;
-  private activate_spinner: boolean;
+  public activate_spinner: boolean;
 
   constructor(private router: Router, private activatedRouter: ActivatedRoute, private userService : UserService){
   }
