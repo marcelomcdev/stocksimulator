@@ -12,12 +12,6 @@ namespace StockSimulator.Service.Services
 
         }
 
-        public User Authenticate(string email, string password)
-        {
-            IQueryable<User> query = base.FindBy(u=> u.Email.Equals(email) && u.Password.Equals(password));
-            return query.FirstOrDefault();
-        }
-
         public string InsertIdentity(User entity)
         {
             base.Insert(entity);
