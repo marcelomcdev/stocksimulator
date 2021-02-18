@@ -14,7 +14,7 @@ namespace StockSimulator.Data.Mapping
             //builder.Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Property(u => u.Name).IsRequired().HasMaxLength(100).HasColumnType("varchar(100)");
             builder.Property(u => u.Email).IsRequired().HasMaxLength(150).HasColumnType("varchar(150)");
-            builder.Property(u => u.Password).IsRequired().HasMaxLength(20).HasColumnType("varchar(20)");
+            builder.Property(u => u.CPF).IsRequired().HasMaxLength(11).HasColumnType("varchar(11)");
 
             builder
                 .HasMany(u => u.Accounts)

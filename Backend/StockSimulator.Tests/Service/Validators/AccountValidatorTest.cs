@@ -54,35 +54,25 @@ namespace StockSimulator.Tests.Service.Validators
 
         #endregion
 
-        #region Name Validation
+        #region Bank Validation
 
         [Test]
-        public void Should_have_error_when_name_is_null()
+        public void Should_have_error_when_bank_is_zero()
         {
-            var model = new Account() { Name= null };
-            Validate(model, x => x.Name, true);
-
+            var model = new Account() { Bank = 0 };
+            Validate(model, x => x.Bank, true);
         }
 
-        [Test]
-        public void Should_have_error_when_name_is_empty()
+        public void Should_have_error_when_bank_is_diferent_of_352()
         {
-            var model = new Account() { Name = "" };
-            Validate(model, x => x.Name, true);
+            var model = new Account() { Id = 100 };
+            Validate(model, x => x.Bank, true);
         }
 
-        [Test]
-        public void Should_have_error_when_name_is_gt_20_characters()
+        public void Should_have_error_when_bank_is_eq_352()
         {
-            var model = new Account() { Name = "Banco de Desenvolvimento do Estado de Minas Gerais" };
-            Validate(model, x => x.Name, true);
-        }
-
-        [Test]
-        public void Should_have_error_when_name_is_lt_3_characters()
-        {
-            var model = new Account() { Name = "AC" };
-            Validate(model, x => x.Name, true);
+            var model = new Account() { Id = 352 };
+            Validate(model, x => x.Bank);
         }
 
         #endregion

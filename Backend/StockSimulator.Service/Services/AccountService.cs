@@ -14,6 +14,14 @@ namespace StockSimulator.Service.Services
 
         }
 
+        public int GetLastAccountNumber()
+        {
+            var query = base.GetAll().OrderBy(f => f.AccountNumber).LastOrDefault();
+            if (query != null)
+                return query.AccountNumber;
+            else
+                return 0;
+        }
 
         public int InsertIdentity(Account entity)
         {

@@ -8,7 +8,9 @@ namespace StockSimulator.Service.Validators
         public AccountValidator()
         {
             RuleFor(x => x.Id).NotNull();
-            RuleFor(x => x.Name).NotNull().NotEmpty().Length(3, 20);
+            RuleFor(x => x.Bank).NotNull();
+            RuleFor(x => x.Branch).NotNull();
+            RuleFor(x => x.AccountNumber).NotNull();
             RuleFor(x => x.UserId).NotNull();
         }
     }

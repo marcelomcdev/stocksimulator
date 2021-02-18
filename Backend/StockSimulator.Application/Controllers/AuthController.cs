@@ -43,9 +43,11 @@ namespace StockSimulator.Application.Controllers
 
             var user = new User
             {
-                UserName = registerUser.Name,
+                Name = registerUser.Name,
+                UserName = registerUser.Email.Split('@')[0],
                 Email = registerUser.Email,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                CPF = registerUser.CPF
             };
 
             var result = await _userManager.CreateAsync(user, registerUser.Password);
@@ -53,7 +55,16 @@ namespace StockSimulator.Application.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
             else
-                _accountService.InsertIdentity(new Account() { UserId = user.Id, Name = "Minha Conta", TotalBalance = 0 });
+            {
+                _accountService.InsertIdentity(new Account() { 
+                                                    UserId = user.Id, 
+                                                    Bank = 352, 
+                                                    Branch = 1, 
+                                                    AccountNumber = (_accountService.GetLastAccountNumber() + 1), 
+                                                    TotalBalance = 0 
+                                                });
+            }
+                
 
             await _signInManager.SignInAsync(user, false);
             return Ok(await GenerateJwt(registerUser.Email));

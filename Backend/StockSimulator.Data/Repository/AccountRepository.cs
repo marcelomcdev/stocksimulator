@@ -26,7 +26,7 @@ namespace StockSimulator.Data.Repository
 
         public override IEnumerable<Account> GetAll()
         {
-            return context.Accounts.Include("Operations").AsNoTracking().OrderBy(x => x.Name);
+            return context.Accounts.Include("Operations").AsNoTracking().OrderBy(x => x.Bank).ThenBy(f=> f.Branch).ThenBy(f=> f.AccountNumber);
         }
     }
 }

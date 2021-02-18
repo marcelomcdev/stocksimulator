@@ -5,12 +5,11 @@ using System.Text;
 
 namespace StockSimulator.Domain.Entities
 {
-    public class User : IdentityUser //BaseEntity
+    public class User : IdentityUser
     {
-        //public int Id { get; set; }
         public string Name { get; set; }
-        //public string Email { get; set; }
-        public string Password { get; set; }
+        public string CPF { get; set; }
+        
         /// <summary>
         /// A user can have one or more accounts
         /// </summary>

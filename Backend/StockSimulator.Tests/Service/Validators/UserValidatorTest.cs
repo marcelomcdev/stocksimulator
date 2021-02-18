@@ -112,42 +112,5 @@ namespace StockSimulator.Tests.Service.Validators
 
         #endregion
 
-        #region Password Validation
-        [Test]
-        public void Should_have_error_when_password_is_null()
-        {
-            var model = new User() { Password = null };
-            Validate(model, u => u.Password, true);
-        }
-
-        [Test]
-        public void Should_have_error_when_password_is_empty()
-        {
-            var model = new User() { Password = "" };
-            Validate(model, u => u.Password, true);
-        }
-
-        [Test]
-        public void Should_have_error_when_password_is_lt_8_characters()
-        {
-            var model = new User() { Password = "258s596" };
-            Validate(model, u => u.Password, true);
-        }
-
-        [Test]
-        public void Should_have_error_when_password_is_gt_20_characters()
-        {
-            var model = new User() { Password = "35s89z67s8xsdfr56s549" };
-            Validate(model, u => u.Password, true);
-        }
-
-        [Test]
-        public void Should_have_pass_when_password_has_met_all_requirements()
-        {
-            var model = new User() { Password = "1253d58s9a12r456s8" };
-            Validate(model, u => u.Password);
-        }
-
-        #endregion
     }
 }
