@@ -14,10 +14,6 @@ namespace StockSimulator.Data.Mapping
             builder.Property(a => a.AccountNumber).IsRequired().HasColumnType("int");
             builder.Property(a => a.UserId).IsRequired();
             builder.Property(a => a.TotalBalance).IsRequired().HasColumnType("decimal(10,2)");
-
-            builder
-                .HasMany(a => a.Operations)
-                .WithOne(a => a.Account);
         }
     }
 }

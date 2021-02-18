@@ -229,10 +229,14 @@ namespace StockSimulator.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)")
-                        .HasMaxLength(20);
+                    b.Property<int>("AccountNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Bank")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Branch")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalBalance")
                         .HasColumnType("decimal(10,2)");
@@ -255,26 +259,26 @@ namespace StockSimulator.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("OperationType")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,2)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Operations");
                 });
@@ -283,15 +287,15 @@ namespace StockSimulator.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("varchar(11)")
+                        .HasMaxLength(11);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)")
-                        .HasMaxLength(20);
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -358,11 +362,10 @@ namespace StockSimulator.Data.Migrations
 
             modelBuilder.Entity("StockSimulator.Domain.Entities.Operation", b =>
                 {
-                    b.HasOne("StockSimulator.Domain.Entities.Account", "Account")
+                    b.HasOne("StockSimulator.Domain.Entities.User", "User")
                         .WithMany("Operations")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

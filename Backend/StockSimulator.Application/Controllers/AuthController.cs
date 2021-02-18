@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -7,10 +6,8 @@ using StockSimulator.Application.Security;
 using StockSimulator.Application.ViewModels;
 using StockSimulator.CrossCutting.Configuration;
 using StockSimulator.Domain.Entities;
-using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
@@ -26,13 +23,15 @@ namespace StockSimulator.Application.Controllers
         private readonly UserManager<User> _userManager;
         private readonly GeneralConfig _generalConfig;
         private readonly IAccountService _accountService;
+        private readonly IOperationService _operationService;
 
-        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<GeneralConfig> generalConfig, IAccountService accountService)
+        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<GeneralConfig> generalConfig, IAccountService accountService, IOperationService operationService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _generalConfig = generalConfig.Value;
             _accountService = accountService;
+            _operationService = operationService;
         }
 
         [HttpPost("sign_up")]
@@ -64,7 +63,6 @@ namespace StockSimulator.Application.Controllers
                                                     TotalBalance = 0 
                                                 });
             }
-                
 
             await _signInManager.SignInAsync(user, false);
             return Ok(await GenerateJwt(registerUser.Email));
@@ -104,13 +102,13 @@ namespace StockSimulator.Application.Controllers
             var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
             Response.Headers.Add("access-token", token);
             Response.Headers.Add("client", user.UserName);
-            Response.Headers.Add("uid", user.Email);
+            Response.Headers.Add("uid", user.Id);
 
             return new SessionToken()
             {
                 AccessToken = token,
                 Client = user.UserName,
-                UID = user.Email
+                UID = user.Id
             };
         }
     }

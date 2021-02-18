@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using StockSimulator.Domain.ValuableObjects;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using StockSimulator.Domain.ValuableObjects;
 
 namespace StockSimulator.Service.QuoteSimulator
 {
@@ -61,48 +60,6 @@ namespace StockSimulator.Service.QuoteSimulator
 
             return Item;
         }
-
-
-        //public async Task<dynamic> Listen(string url, List<string> filters)
-        //{
-        //    ClientWebSocket socket = new ClientWebSocket();
-        //    listenTask = Task.Run(async () =>
-        //    {
-        //        try
-        //        {
-        //            Items = new List<dynamic>();
-        //            bool notFound = true;
-        //            byte[] buffer = new byte[1024];
-        //            await socket.ConnectAsync(new Uri(url), CancellationToken.None);
-        //            while (notFound)
-        //            {
-        //                WebSocketReceiveResult result = await socket.ReceiveAsync(buffer, CancellationToken.None);
-        //                string data = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        
-        //                if (filters.Any(x => data.Contains(x)) && !Items.Any(x=> data.Contains(x)))
-        //                {
-        //                    Item = data;
-        //                    Items.Add(Item);
-        //                    if(Items.Count() == filters.Count())
-        //                    {
-        //                        notFound = false;
-        //                    }
-                            
-        //                }
-
-        //                Console.WriteLine(data);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            //return "";
-        //            //treat exception
-        //        }
-        //    }, src.Token);
-
-        //    return Items;
-        //    // listenTask;
-        //}
 
         public Quote ConvertToQuote(object obj)
         {

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace StockSimulator.Domain.Entities
+﻿namespace StockSimulator.Domain.Entities
 {
     public class Account : BaseEntity
     {
@@ -11,7 +8,5 @@ namespace StockSimulator.Domain.Entities
         public decimal TotalBalance { get; set; }
         public string UserId { get; set; }
         public virtual User User { get; set; }
-
-        public virtual ICollection<Operation> Operations { get; set; }
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StockSimulator.Data.Mapping;
 using StockSimulator.Domain.Entities;
+using System.Linq;
 
 namespace StockSimulator.Data.Context
 {

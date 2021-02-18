@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace StockSimulator.Domain.Entities
 {
@@ -9,10 +7,7 @@ namespace StockSimulator.Domain.Entities
     {
         public string Name { get; set; }
         public string CPF { get; set; }
-        
-        /// <summary>
-        /// A user can have one or more accounts
-        /// </summary>
         public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Operation> Operations { get; set; }
     }
 }

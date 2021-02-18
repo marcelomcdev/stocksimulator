@@ -48,43 +48,43 @@ namespace StockSimulator.Tests.Service.Validators
         #endregion
 
 
-        #region Name Validation
+        #region Symbol Validation
 
         [Test]
-        public void Should_have_error_when_name_is_null()
+        public void Should_have_error_when_symbol_is_null()
         {
-            var model = new Operation() { Name = null };
-            Validate(model, x => x.Name, true);
+            var model = new Operation() { Symbol = null };
+            Validate(model, x => x.Symbol, true);
 
         }
 
         [Test]
-        public void Should_have_error_when_name_is_empty()
+        public void Should_have_error_when_symbol_is_empty()
         {
-            var model = new Operation() { Name = string.Empty };
-            Validate(model, x => x.Name, true);
+            var model = new Operation() { Symbol = string.Empty };
+            Validate(model, x => x.Symbol, true);
         }
 
         [Test]
-        public void Should_have_error_when_name_is_lt_3()
+        public void Should_have_error_when_symbol_is_lt_3()
         {
-            var model = new Operation() { Name = "El" };
-            Validate(model, x => x.Name, true);
+            var model = new Operation() { Symbol = "El" };
+            Validate(model, x => x.Symbol, true);
         }
 
         [Test]
-        public void Should_have_error_when_name_is_gt_50()
+        public void Should_have_error_when_symbol_is_gt_50()
         {
-            var name = "O".PadRight(51, 'o');
-            var model = new Operation() { Name = name };
-            Validate(model, x => x.Name, true);
+            var symbol = "O".PadRight(51, 'o');
+            var model = new Operation() { Symbol = symbol };
+            Validate(model, x => x.Symbol, true);
         }
 
         [Test]
-        public void Should_have_pass_when_name_has_met_all_requirements()
+        public void Should_have_pass_when_symbol_has_met_all_requirements()
         {
-            var model = new Operation() { Name = "CMIG4" };
-            Validate(model, x => x.Name);
+            var model = new Operation() { Symbol = "CMIG4" };
+            Validate(model, x => x.Symbol);
         }
 
         #endregion

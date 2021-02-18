@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 using static StockSimulator.Domain.Enums.Enumerators;
 
 namespace StockSimulator.Domain.Entities
 {
     public class Operation : BaseEntity
     {
-        public int AccountId { get; set; }
-        public virtual Account Account { get; set; }
-        public string Name { get; set; }
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
+        public string Symbol { get; set; }
         public int Quantity { get; set; }
-        public decimal Price { get; set; }
+        public decimal CurrentPrice { get; set; }
         public OperationTypeEnum OperationType { get; set; }
 
         [ReadOnly(true)]
-        public decimal TotalValue => Quantity * Price;
+        public decimal TotalValue => Quantity * CurrentPrice;
 
     }
 }

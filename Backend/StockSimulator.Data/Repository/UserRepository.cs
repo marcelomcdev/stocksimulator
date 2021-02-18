@@ -21,13 +21,13 @@ namespace StockSimulator.Data.Repository
         public override IQueryable<User> FindBy(Expression<Func<User, bool>> predicate)
         {
             IQueryable<User> query = _context.Users
-                .Include("Accounts");
+                .Include("Accounts").Include("Operations");
             return query.Where(predicate);
         }
 
         public override IEnumerable<User> GetAll()
         {
-            return _context.Users.Include("Accounts").AsNoTracking().OrderBy(x => x.Name);
+            return _context.Users.Include("Accounts").Include("Operations").AsNoTracking().OrderBy(x => x.Name);
         }
     }
 }

@@ -42,7 +42,7 @@ namespace StockSimulator.Data.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Password = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                    CPF = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,7 +76,9 @@ namespace StockSimulator.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Bank = table.Column<int>(type: "int", nullable: false),
+                    Branch = table.Column<int>(type: "int", nullable: false),
+                    AccountNumber = table.Column<int>(type: "int", nullable: false),
                     TotalBalance = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -182,19 +184,19 @@ namespace StockSimulator.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Symbol = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    CurrentPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     OperationType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Operations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Operations_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
+                        name: "FK_Operations_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -244,13 +246,16 @@ namespace StockSimulator.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Operations_AccountId",
+                name: "IX_Operations_UserId",
                 table: "Operations",
-                column: "AccountId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accounts");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -271,9 +276,6 @@ namespace StockSimulator.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

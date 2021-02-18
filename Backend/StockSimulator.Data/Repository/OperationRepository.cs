@@ -20,13 +20,13 @@ namespace StockSimulator.Data.Repository
 
         public override IQueryable<Operation> FindBy(Expression<Func<Operation, bool>> predicate)
         {
-            IQueryable<Operation> query = context.Operations; //.Include("Accounts");
+            IQueryable<Operation> query = context.Operations;
             return query.Where(predicate);
         }
 
         public override IEnumerable<Operation> GetAll()
         {
-            return context.Operations.Include("Accounts").AsNoTracking().OrderBy(x => x.Name);
+            return context.Operations.AsNoTracking().OrderBy(x => x.Symbol);
         }
     }
 }
