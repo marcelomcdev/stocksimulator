@@ -1,0 +1,42 @@
+<div class="text-center">
+  <form class="form-signin">
+    <h4 class="mb3">Login do Cliente</h4>
+    <label for="inpuEmail" class="sr-only">Email</label>
+    <input type="text" id="inputEmail"
+    name="email" placeholder="Informe seu usuario"
+    class="form-control mb-2"
+
+    [(ngModel)]="usuario.email"
+    #email="ngModel"
+
+    required
+    >
+
+    <label for="inpuPassword" class="sr-only">Email</label>
+    <input type="password" id="inputSenha"
+    name="senha" placeholder="Senha"
+    class="form-control mb-2"
+    #senha="ngModel"
+    [ngClass] = "{
+      'is-invalid':senha.invalid && (senha.dirty || senha.touched),
+      'is-valid': senha.valid && (senha.dirty || senha.touched)
+    }"
+    [(ngModel)]="usuario.senha"
+    required
+    >
+
+
+    <button class="btn btn-primary btn-block mb-3" type="submit" (click)="entrar()">Entrar</button>
+
+    <div>
+      Novo por aqui? <a [routerLink]='["/novo-usuario"]'>Cadastre-se</a>
+    </div>
+
+
+
+    <!-- <div class="alert alert-danger" *ngIf="mensagem">
+      {{ mensagem }}
+    </div> -->
+
+  </form>
+</div>

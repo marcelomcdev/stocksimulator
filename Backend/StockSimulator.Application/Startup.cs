@@ -153,8 +153,18 @@ namespace StockSimulator.Application
 
             #endregion
 
-            app.UseHttpsRedirection();
-            
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                //c.AllowCredentials();
+                c.AllowAnyOrigin();
+                //c.WithOrigins("http://localhost:4200");
+            });
+
+            //app.UseHttpsRedirection();
+            app.UseHttpMethodOverride();
+
             app.UseRouting();
 
             app.UseAuthentication();

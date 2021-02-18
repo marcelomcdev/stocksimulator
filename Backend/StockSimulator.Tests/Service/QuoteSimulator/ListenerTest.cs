@@ -4,6 +4,7 @@ using StockSimulator.Domain.ValuableObjects;
 using StockSimulator.Service.QuoteSimulator;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace StockSimulator.Tests.Service.QuoteSimulator
@@ -32,6 +33,30 @@ namespace StockSimulator.Tests.Service.QuoteSimulator
             Assert.IsTrue(listener.Item != null);
             Assert.Contains(quote_name, new List<string>() { ((Quote)listener.Item).Name });
         }
+
+        [Test]
+        public void Should_have_a_list_of_quotes()
+        {
+            var tarefa = listener.Listen(url);
+
+            while (listener?.Items == null || (listener?.Items != null && listener?.Items?.Count < 80))
+                System.Threading.Thread.Sleep(500);
+
+            //var lista = listener?.Items.ToList().GroupBy(f => f.Name);
+
+            var query = from c in listener?.Items?.ToList()
+                    group c by c.Name
+                    into grp
+                    select new { Symbol = grp.Key, Count = grp.Select(x=> x.Name).Count() };
+            var queryOrdered = query.OrderByDescending(f => f.Count).Take(5);
+
+            listener.StopListening();
+            //Assert.IsTrue(listener?.Items == null || (listener?.Items != null && listener?.Items?.Count < 10));
+            Assert.IsTrue(listener?.Items?.Count >= 79);
+            
+            //Assert.Contains(quote_name, new List<string>() { ((Quote)listener.Item).Name });
+        }
+
 
         [Test]
         public void Should_have_an_error_if_a_filter_is_empty()

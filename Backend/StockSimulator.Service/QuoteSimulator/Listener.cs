@@ -17,7 +17,7 @@ namespace StockSimulator.Service.QuoteSimulator
         }
 
         public dynamic Item { get; set; }
-        public List<dynamic> Items { get; set; }
+        public List<Quote> Items { get; set; }
 
         private Task listenTask;
         private CancellationTokenSource src = new CancellationTokenSource();
@@ -49,7 +49,8 @@ namespace StockSimulator.Service.QuoteSimulator
                             Item = quote;
                             notFound = false;
                         }
-                        Console.WriteLine(data);
+
+                       Console.WriteLine(data);
                     }
                 }
                 catch (Exception ex)
@@ -61,12 +62,53 @@ namespace StockSimulator.Service.QuoteSimulator
             return Item;
         }
 
+
+
+        public async Task<dynamic> Listen(string url)
+        {
+            if (String.IsNullOrEmpty(url) || String.IsNullOrWhiteSpace(url))
+                throw new Exception("A url is required");
+
+            ClientWebSocket socket = new ClientWebSocket();
+            listenTask = Task.Run(async () =>
+            {
+                try
+                {
+                    bool notFound = true;
+                    byte[] buffer = new byte[1024];
+                    await socket.ConnectAsync(new Uri(url), CancellationToken.None);
+                    Items = new List<Quote>();
+                    while (true)
+                    {
+                        WebSocketReceiveResult result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+                        string data = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+                        var obj = JsonConvert.DeserializeObject(data);
+                        var quote = ConvertToQuote(obj);
+                        Item = quote;
+
+                        Items.Add(quote);
+
+                       // Console.WriteLine(data);
+                       //stock, value, timestamp, redundant
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //treat exception
+                }
+            }, src.Token);
+
+            return Item;
+        }
+
+
         public Quote ConvertToQuote(object obj)
         {
             var obj2 = obj.ToString().Replace(":", "").Replace("\r\n", "").Replace("{", "").Replace("}", "").Trim().Split("\"");
             Quote quote = new Quote();
             quote.Name = obj2[1];
-            quote.Value = decimal.Parse(obj2[2]);
+            quote.Value = decimal.Parse(obj2[2].Replace(", ", "").Trim().Replace(".", ","));
             var timestamp = Math.Round(decimal.Parse(obj2[4].ToString().Trim().Replace(".", ",")), 0);
             quote.Timestamp = StockSimulator.CrossCutting.Utils.Converters.UnixTimeStampToDateTime((double)timestamp);
             return quote;

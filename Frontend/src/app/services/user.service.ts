@@ -1,5 +1,5 @@
+import { environment } from './../../environments/environment';
 import { User } from '../model/user';
-
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
@@ -11,6 +11,11 @@ export class UserService {
 
   private baseURL: string;
   private _user: User;
+
+  constructor(private http: HttpClient) {
+    this.baseURL = environment.SERVER_URL;
+
+  }
 
   get user(): User {
     let user_json = sessionStorage.getItem('user-authenticated');
@@ -24,7 +29,7 @@ export class UserService {
   }
 
   public user_authenticated(): boolean {
-    return this._user != null && this._user.email != '' && this._user.password != '';
+    return this._user != null && this._user.email != '' && this._user.senha != '';
   }
 
   public clean_session(){
@@ -32,15 +37,13 @@ export class UserService {
     this._user = null;
   }
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    this.baseURL = baseUrl;
-  }
+
 
   public verifyUser(user: User) : Observable<User> {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     const body = {
-      email: user.email,
-      senha: user.password
+      username: user.email,
+      password: user.senha
     }
 
     return this.http.post<User>(`${this.baseURL}api/auth/sign_in` , body, { headers })
@@ -50,12 +53,12 @@ export class UserService {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     const body = {
       email: user.email,
-      senha: user.password,
-      nome: user.username,
+      senha: user.senha,
+      username: user.username,
       cpf: user.cpf
     }
 
-    return this.http.post<User>(this.baseURL + 'api/auth', body, {headers});
+    return this.http.post<User>(this.baseURL + 'api/auth/sign_up', body, {headers});
 
   }
 
