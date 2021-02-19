@@ -1,6 +1,8 @@
 ﻿using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Service.QuoteSimulator;
+using System.Collections.Generic;
 using System.Linq;
 using static StockSimulator.Domain.Enums.Enumerators;
 
@@ -19,6 +21,7 @@ namespace StockSimulator.Service.Services
             base.Commit();
             return entity.Id;
         }
+
 
 
         #region Operations

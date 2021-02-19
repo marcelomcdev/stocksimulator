@@ -98,9 +98,10 @@ namespace StockSimulator.Application
                     ValidIssuer = appSettings.Issuer
                 };
             });
-            
+
             #endregion
 
+            services.AddMemoryCache();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();

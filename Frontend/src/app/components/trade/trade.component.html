@@ -1,0 +1,30 @@
+
+<h4>
+  Lista de ativos mais negociados
+</h4>
+
+
+<p *ngIf="!trades">Carregando ativos...</p>
+
+
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Simbolo</th>
+      <th scope="col">Valor Atual</th>
+      <th scope="col">Operacao</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let t of trades">
+      <tr>
+        <td>{{ t.symbol }}</td>
+        <td>{{ t.currentPrice }}</td>
+        <td>
+          <button type="button" class="btn btn-success m-1">Comprar</button>
+          <button type="button" class="btn btn-danger m-1">Vender</button>
+        </td>
+      </tr>
+  </tbody>
+</table>

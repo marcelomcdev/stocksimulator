@@ -37,20 +37,22 @@ export class UserService {
     this._user = null;
   }
 
-
+  get headers(): HttpHeaders {
+    return new HttpHeaders().set('content-type', 'application/json');
+  }
 
   public verifyUser(user: User) : Observable<User> {
-    const headers = new HttpHeaders().set('content-type', 'application/json');
+    //const headers = new HttpHeaders().set('content-type', 'application/json');
     const body = {
       username: user.email,
       password: user.senha
     }
 
-    return this.http.post<User>(`${this.baseURL}api/auth/sign_in` , body, { headers })
+    return this.http.post<User>(`${this.baseURL}api/auth/sign_in` , body, { headers: this.headers })
   }
 
   public createUser(user: User) : Observable<User> {
-    const headers = new HttpHeaders().set('content-type', 'application/json');
+    //const headers = new HttpHeaders().set('content-type', 'application/json');
     const body = {
       name: user.name,
       email: user.email,
@@ -60,7 +62,7 @@ export class UserService {
       cpf: user.cpf,
     }
 
-    return this.http.post<User>(this.baseURL + 'api/auth/sign_up', body, {headers});
+    return this.http.post<User>(this.baseURL + 'api/auth/sign_up', body, {headers : this.headers});
 
   }
 

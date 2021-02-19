@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using StockSimulator.Domain.Interfaces.Services;
 using StockSimulator.Domain.ValuableObjects;
 using System;
@@ -12,6 +13,15 @@ namespace StockSimulator.Service.QuoteSimulator
 {
     public class Listener : IListenerService
     {
+        public Listener()
+        {
+
+        }
+
+        private MemoryCache _cache;
+        
+
+
         public void StopListening()
         {
             this.src.Cancel();
@@ -79,6 +89,7 @@ namespace StockSimulator.Service.QuoteSimulator
                     byte[] buffer = new byte[1024];
                     await socket.ConnectAsync(new Uri(url), CancellationToken.None);
                     Items = new List<Quote>();
+
                     while (true)
                     {
                         WebSocketReceiveResult result = await socket.ReceiveAsync(buffer, CancellationToken.None);
@@ -90,8 +101,8 @@ namespace StockSimulator.Service.QuoteSimulator
 
                         Items.Add(quote);
 
-                       // Console.WriteLine(data);
-                       //stock, value, timestamp, redundant
+                        // Console.WriteLine(data);
+                        //stock, value, timestamp, redundant
                     }
                 }
                 catch (Exception ex)

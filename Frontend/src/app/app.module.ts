@@ -1,3 +1,5 @@
+import { TradeService } from './services/trade.service';
+import { TradeComponent } from './components/trade/trade.component';
 import { GuardaRotas } from './authorization/guarda.rotas';
 import { AssetComponent } from './components/asset/asset.component';
 import { LoginComponent } from './components/login/login.component';
@@ -18,7 +20,8 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    TradeComponent
    ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -28,11 +31,12 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'entrar', component: LoginComponent },
-      { path: 'acoes', component: AssetComponent, canActivate: [GuardaRotas] },
+      //{ path: 'acoes', component: TradeComponent },
+      { path: 'acoes', component: TradeComponent, canActivate: [GuardaRotas] },
       //{ path: 'novo-usuario', component: CadastoUsuarioComponent }
     ])
   ],
-  providers: [UserService],
+  providers: [UserService, TradeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

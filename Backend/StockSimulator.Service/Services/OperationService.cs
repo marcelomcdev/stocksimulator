@@ -1,7 +1,9 @@
-﻿using StockSimulator.Domain.Entities;
+﻿using StockSimulator.CrossCutting.Logic;
+using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StockSimulator.Service.Services
 {
@@ -24,5 +26,13 @@ namespace StockSimulator.Service.Services
             base.Insert(entities);
             base.Commit();
         }
+
+        public IEnumerable<dynamic> GetMostTradedOperations()
+        {
+            var trades = TradeOperations.GetMostTradedOperations(base.GetAll().ToList());
+            return trades;
+        }
+
+
     }
 }

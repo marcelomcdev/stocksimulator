@@ -7,5 +7,6 @@ namespace StockSimulator.Domain.Interfaces.Services
     {
         int InsertIdentity(Operation entity);
         void InsertIdenties(List<Operation> entities);
+        IEnumerable<dynamic> GetMostTradedOperations();
     }
 }
