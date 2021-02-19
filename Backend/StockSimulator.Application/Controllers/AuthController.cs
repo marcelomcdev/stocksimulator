@@ -68,6 +68,26 @@ namespace StockSimulator.Application.Controllers
                                                 });
             }
 
+            #region Mock
+
+            var tarefa = _listener.Listen("ws://localhost:8080/quotes");
+
+            while (_listener?.Items == null || (_listener?.Items != null && _listener?.Items?.Count < 200))
+                System.Threading.Thread.Sleep(500);
+
+            List<Operation> operacoes = new List<Operation>();
+            int index = 0;
+            var lista = _listener.Items.ToList();
+            foreach (var item in lista)
+            {
+                index++;
+                if (index >= 6) index = 0;
+                operacoes.Add(new Operation() { UserId = user.Id, Symbol = item.Name, CurrentPrice = item.Value, OperationType = Domain.Enums.Enumerators.OperationTypeEnum.Buy, Quantity = 1, OperationDate = DateTime.Now.AddDays(index * (-1)) });
+            }
+            _operationService.InsertIdenties(operacoes);
+
+            #endregion Mock
+
             await _signInManager.SignInAsync(user, false);
             return Ok(await GenerateJwt(registerUser.Email));
         }
