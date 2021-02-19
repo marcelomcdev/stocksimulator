@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using StockSimulator.Domain.Interfaces.Services;
 using StockSimulator.Domain.ValuableObjects;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StockSimulator.Service.QuoteSimulator
 {
-    public class Listener
+    public class Listener : IListenerService
     {
         public void StopListening()
         {

@@ -13,6 +13,7 @@ namespace StockSimulator.Data.Mapping
             builder.Property(o => o.CurrentPrice).IsRequired().HasColumnType("decimal(10,2)");
             builder.Property(o => o.Quantity).IsRequired().HasColumnType("int");
             builder.Property(o => o.OperationType).IsRequired().HasColumnType("int");
+            builder.Property(o => o.OperationDate);
         }
     }
 }

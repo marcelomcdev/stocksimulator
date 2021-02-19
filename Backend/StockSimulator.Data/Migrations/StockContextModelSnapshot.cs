@@ -262,6 +262,9 @@ namespace StockSimulator.Data.Migrations
                     b.Property<decimal>("CurrentPrice")
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<DateTime>("OperationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("OperationType")
                         .HasColumnType("int");
 

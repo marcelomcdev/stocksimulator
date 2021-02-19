@@ -23,13 +23,13 @@ export class NavMenuComponent {
     this.isExpanded = !this.isExpanded;
   }
 
-  // public userLogged(): boolean{
-  //   return this.userService.user_authenticated();
-  // }
+  public userLogged(): boolean{
+    return this.userService.user_authenticated();
+  }
 
-  // logout(){
-  //   this.userService.clean_session();
-  //   this.router.navigate(['/']);
-  // }
+  logout(){
+    this.userService.clean_session();
+    this.router.navigate(['/']);
+  }
 
 }

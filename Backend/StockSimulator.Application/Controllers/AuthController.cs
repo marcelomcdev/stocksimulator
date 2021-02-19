@@ -7,7 +7,9 @@ using StockSimulator.Application.ViewModels;
 using StockSimulator.CrossCutting.Configuration;
 using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Service.QuoteSimulator;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
@@ -24,14 +26,16 @@ namespace StockSimulator.Application.Controllers
         private readonly GeneralConfig _generalConfig;
         private readonly IAccountService _accountService;
         private readonly IOperationService _operationService;
+        private IListenerService _listener;
 
-        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<GeneralConfig> generalConfig, IAccountService accountService, IOperationService operationService)
+        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<GeneralConfig> generalConfig, IAccountService accountService, IOperationService operationService, IListenerService listener)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _generalConfig = generalConfig.Value;
             _accountService = accountService;
             _operationService = operationService;
+            _listener = listener;
         }
 
         [HttpPost("sign_up")]
@@ -79,7 +83,7 @@ namespace StockSimulator.Application.Controllers
             if (result.Succeeded)
                 return Ok(await GenerateJwt(loginUser.UserName));
 
-            return BadRequest("Invalid username or password.");
+            return BadRequest("Usuário ou senha inválidos.");
         }
 
         private async Task<SessionToken> GenerateJwt(string email)

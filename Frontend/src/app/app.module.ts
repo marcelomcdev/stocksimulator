@@ -1,3 +1,4 @@
+import { GuardaRotas } from './authorization/guarda.rotas';
 import { AssetComponent } from './components/asset/asset.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserService } from './services/user.service';
@@ -27,7 +28,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'entrar', component: LoginComponent },
-      { path: 'acoes', component: AssetComponent },
+      { path: 'acoes', component: AssetComponent, canActivate: [GuardaRotas] },
       //{ path: 'novo-usuario', component: CadastoUsuarioComponent }
     ])
   ],

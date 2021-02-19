@@ -16,6 +16,7 @@ using StockSimulator.Data.Repository;
 using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Service.QuoteSimulator;
 using StockSimulator.Service.Services;
 using System;
 using System.Net.WebSockets;
@@ -109,6 +110,8 @@ namespace StockSimulator.Application
 
             services.AddScoped<IOperationRepository, OperationRepository>();
             services.AddScoped<IOperationService, OperationService>();
+
+            services.AddScoped<IListenerService, Listener>();
 
             services.AddControllers();
         }

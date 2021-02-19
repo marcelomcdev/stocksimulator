@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using static StockSimulator.Domain.Enums.Enumerators;
 
 namespace StockSimulator.Domain.Entities
@@ -11,6 +12,7 @@ namespace StockSimulator.Domain.Entities
         public int Quantity { get; set; }
         public decimal CurrentPrice { get; set; }
         public OperationTypeEnum OperationType { get; set; }
+        public DateTime OperationDate { get; set; }
 
         [ReadOnly(true)]
         public decimal TotalValue => Quantity * CurrentPrice;
