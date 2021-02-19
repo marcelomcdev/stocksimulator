@@ -1,5 +1,6 @@
-﻿using StockSimulator.CrossCutting.Logic;
+﻿using StockSimulator.CrossCutting.Business;
 using StockSimulator.Domain.Entities;
+using StockSimulator.Domain.Interfaces.Business;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
 using System.Collections.Generic;
@@ -9,9 +10,10 @@ namespace StockSimulator.Service.Services
 {
     public class OperationService : Service<Operation>, IOperationService
     {
-        public OperationService(IOperationRepository repository) : base(repository)
+        private ITradeOperations _tradeOperations;
+        public OperationService(IOperationRepository repository, ITradeOperations tradeOperations) : base(repository)
         {
-
+            _tradeOperations = tradeOperations;
         }
 
         public int InsertIdentity(Operation entity)
@@ -29,7 +31,7 @@ namespace StockSimulator.Service.Services
 
         public IEnumerable<dynamic> GetMostTradedOperations()
         {
-            var trades = TradeOperations.GetMostTradedOperations(base.GetAll().ToList());
+            var trades = _tradeOperations.GetMostTradedOperations(base.GetAll().ToList());
             return trades;
         }
 

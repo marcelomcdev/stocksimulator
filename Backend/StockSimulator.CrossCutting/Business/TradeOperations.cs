@@ -1,14 +1,15 @@
 ﻿using StockSimulator.Domain.Entities;
+using StockSimulator.Domain.Interfaces.Business;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace StockSimulator.CrossCutting.Logic
+namespace StockSimulator.CrossCutting.Business
 {
-    public class TradeOperations
+    public class TradeOperations : ITradeOperations
     {
-        public static IEnumerable<dynamic> GetMostTradedOperations(List<Operation> operations) 
+        public IEnumerable<dynamic> GetMostTradedOperations(List<Operation> operations) 
         {
             var querybase = (from t in ((from o in operations
                  where o.OperationDate >= Convert.ToDateTime(Convert.ToDateTime(DateTime.Now)).AddDays(-7) && o.OperationDate <= DateTime.Now

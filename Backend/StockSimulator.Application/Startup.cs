@@ -10,10 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using StockSimulator.Application.Helpers.Identity;
+using StockSimulator.CrossCutting.Business;
 using StockSimulator.CrossCutting.Configuration;
 using StockSimulator.Data.Context;
 using StockSimulator.Data.Repository;
 using StockSimulator.Domain.Entities;
+using StockSimulator.Domain.Interfaces.Business;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
 using StockSimulator.Service.QuoteSimulator;
@@ -113,6 +115,7 @@ namespace StockSimulator.Application
             services.AddScoped<IOperationService, OperationService>();
 
             services.AddScoped<IListenerService, Listener>();
+            services.AddScoped<ITradeOperations, TradeOperations>();
 
             services.AddControllers();
         }

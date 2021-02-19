@@ -37,7 +37,6 @@ namespace StockSimulator.Application.Controllers
             });
 
             return cacheEntry;
-            //return _operationService.GetMostTradedOperations();
         }
 
     }
