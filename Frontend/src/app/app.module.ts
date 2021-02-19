@@ -11,10 +11,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-//import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-//import { TooltipModule } from 'ngx-bootstrap/tooltip';
-//import { ModalModule } from 'ngx-bootstrap/modal';
-
 
 @NgModule({
   declarations: [
@@ -28,9 +24,6 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    //BsDropdownModule.forRoot(),
-    //TooltipModule.forRoot(),
-    //ModalModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'entrar', component: LoginComponent },
