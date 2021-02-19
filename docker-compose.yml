@@ -1,0 +1,24 @@
+version: '3.2'
+services:
+  quote:
+    image: toroinvest/quotesmock
+    ports: 
+      - 8080:8080
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    environment: 
+      ACCEPT_EULA: Y
+      SA_PASSWORD: 24092210Mr@
+      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  api: 
+    image: marcelomdc/stocksimulator-backend
+    ports:
+      - 5001:5001
+    environment: 
+      DB_ENV: db
+  web:
+    image: marcelomdc/stocksimulator-frontend
+    ports:
+      - 80:4200
