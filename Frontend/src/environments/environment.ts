@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   BASE_URL: 'http://localhost:4200/',
   SERVER_URL: "https://localhost:5001/",
+  wsEndpoint: 'ws://localhost:8080/quotes'
 };
 
 /*

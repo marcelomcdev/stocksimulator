@@ -42,7 +42,7 @@ export class UserService {
   }
 
   public verifyUser(user: User) : Observable<User> {
-    //const headers = new HttpHeaders().set('content-type', 'application/json');
+
     const body = {
       username: user.email,
       password: user.senha

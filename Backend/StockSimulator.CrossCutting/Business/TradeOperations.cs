@@ -12,7 +12,7 @@ namespace StockSimulator.CrossCutting.Business
         public IEnumerable<dynamic> GetMostTradedOperations(List<Operation> operations) 
         {
             var querybase = (from t in ((from o in operations
-                 where o.OperationDate >= Convert.ToDateTime(Convert.ToDateTime(DateTime.Now)).AddDays(-7) && o.OperationDate <= DateTime.Now
+                 where o.OperationDate >= Convert.ToDateTime(Convert.ToDateTime(DateTime.Now)).AddDays(-37) && o.OperationDate <= DateTime.Now
                  group o by new {o.Symbol } into g 
                  select new
                  {
