@@ -18,8 +18,10 @@ using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Business;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Domain.Interfaces.SignalR;
 using StockSimulator.Service.QuoteSimulator;
 using StockSimulator.Service.Services;
+using StockSimulator.Service.SignalR;
 using System;
 using System.Net.WebSockets;
 using System.Text;
@@ -51,6 +53,17 @@ namespace StockSimulator.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder => 
+            {
+                builder
+                .WithOrigins("http://localhost:4200/")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();                
+            }));
+
+            services.AddSignalR();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddDbContext<StockContext>(option => option.UseSqlServer(ConnectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
@@ -117,6 +130,8 @@ namespace StockSimulator.Application
             services.AddScoped<IListenerService, Listener>();
             services.AddScoped<ITradeOperations, TradeOperations>();
 
+            services.AddScoped<ISignalRService, SignalRService>();
+
             services.AddControllers();
         }
 
@@ -160,14 +175,16 @@ namespace StockSimulator.Application
 
             #endregion
 
-            app.UseCors(c =>
-            {
-                c.AllowAnyHeader();
-                c.AllowAnyMethod();
-                //c.AllowCredentials();
-                c.AllowAnyOrigin();
-                //c.WithOrigins("http://localhost:4200");
-            });
+            //app.UseCors(c =>
+            //{
+            //    c.AllowAnyHeader();
+            //    c.AllowAnyMethod();
+            //    //c.AllowCredentials();
+            //    c.AllowAnyOrigin();
+            //    //c.WithOrigins("http://localhost:4200");
+            //});
+
+            app.UseCors("CorsPolicy");
 
             //app.UseHttpsRedirection();
             app.UseHttpMethodOverride();
@@ -181,6 +198,8 @@ namespace StockSimulator.Application
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                //endpoints.MapHub<NotificationHub>("/api/notificationhub");
+                endpoints.MapHub<TradeHub>("/tradehub");
             });
         }
 

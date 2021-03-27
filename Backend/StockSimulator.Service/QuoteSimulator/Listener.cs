@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Domain.Interfaces.SignalR;
 using StockSimulator.Domain.ValuableObjects;
+using StockSimulator.Service.Cache;
 using System;
 using System.Collections.Generic;
 using System.Net.WebSockets;
@@ -13,13 +15,15 @@ namespace StockSimulator.Service.QuoteSimulator
 {
     public class Listener : IListenerService
     {
-        public Listener()
-        {
+        private readonly ISignalRService _signalRService;
+        private readonly IMemoryCache _cache;
 
+        public Listener(ISignalRService signalRService, IMemoryCache cache)
+        {
+            _signalRService = signalRService;
+            _cache = cache;
         }
 
-        private MemoryCache _cache;
-        
 
 
         public void StopListening()
@@ -101,6 +105,20 @@ namespace StockSimulator.Service.QuoteSimulator
 
                         Items.Add(quote);
 
+                        var cacheEntry = _cache.GetOrCreate("Quotes", entry =>
+                        {
+                            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30);
+                            entry.SetPriority(CacheItemPriority.High);
+                            return Items;
+                        });
+
+                        
+                        //CacheService.Quotes.Add(quote);
+                        //_cache.Set<Quote>(quote.Name, quote);
+
+                        await _signalRService.SendQuotes(Items.ToArray());
+
+                        //_signalRService.SendMessage("");
                         // Console.WriteLine(data);
                         //stock, value, timestamp, redundant
                     }

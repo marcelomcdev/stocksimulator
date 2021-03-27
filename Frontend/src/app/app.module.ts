@@ -1,3 +1,4 @@
+import { SignalRService } from './services/signalr.service';
 import { TradeService } from './services/trade.service';
 import { TradeComponent } from './components/trade/trade.component';
 import { GuardaRotas } from './authorization/guarda.rotas';
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
     TradeComponent
    ],
   imports: [
-    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -34,9 +36,10 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
       //{ path: 'acoes', component: TradeComponent },
       { path: 'acoes', component: TradeComponent, canActivate: [GuardaRotas] },
       //{ path: 'novo-usuario', component: CadastoUsuarioComponent }
+      //{ path: 'toast', component: ToastComponent }
     ])
   ],
-  providers: [UserService, TradeService],
+  providers: [UserService, TradeService, SignalRService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

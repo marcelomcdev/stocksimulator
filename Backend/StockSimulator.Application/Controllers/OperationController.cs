@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Domain.Interfaces.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,14 @@ namespace StockSimulator.Application.Controllers
     {
         private readonly IOperationService _operationService;
         private readonly IMemoryCache _cache;
+        private readonly ISignalRService _signalRService;
 
 
-        public OperationController(IOperationService operationService, IMemoryCache cache)
+        public OperationController(IOperationService operationService, IMemoryCache cache, ISignalRService signalRService)
         {
             _operationService = operationService;
             _cache = cache;
+            _signalRService = signalRService;
         }
 
         // GET: api/<OperationController>
@@ -35,6 +38,8 @@ namespace StockSimulator.Application.Controllers
                 entry.SetPriority(CacheItemPriority.High);
                 return _operationService.GetMostTradedOperations();
             });
+
+            _signalRService.SendMessage("mensagem");
 
             return cacheEntry;
         }
