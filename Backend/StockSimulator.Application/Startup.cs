@@ -18,6 +18,7 @@ using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Business;
 using StockSimulator.Domain.Interfaces.Repository;
 using StockSimulator.Domain.Interfaces.Services;
+using StockSimulator.Service.HubConfig;
 using StockSimulator.Service.QuoteSimulator;
 using StockSimulator.Service.Services;
 using System;
@@ -54,6 +55,20 @@ namespace StockSimulator.Application
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddDbContext<StockContext>(option => option.UseSqlServer(ConnectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
+
+            services.AddCors(options => 
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                builder
+                .WithOrigins("http://locahost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                );
+                
+            });
+
+            services.AddSignalR();
 
             #region Identity
 
@@ -160,14 +175,7 @@ namespace StockSimulator.Application
 
             #endregion
 
-            app.UseCors(c =>
-            {
-                c.AllowAnyHeader();
-                c.AllowAnyMethod();
-                //c.AllowCredentials();
-                c.AllowAnyOrigin();
-                //c.WithOrigins("http://localhost:4200");
-            });
+            app.UseCors("CorsPolicy");
 
             //app.UseHttpsRedirection();
             app.UseHttpMethodOverride();
@@ -181,6 +189,7 @@ namespace StockSimulator.Application
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChartHub>("/chart");
             });
         }
 
