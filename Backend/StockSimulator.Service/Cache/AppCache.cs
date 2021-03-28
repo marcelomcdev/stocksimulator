@@ -19,18 +19,6 @@ namespace StockSimulator.Domain.Cache
             _listenerService = listenerService;
         }
 
-        //public static void AddQuoteToCache(Quote quote)
-        //{
-        //    if (!Dependencies.MemoryCache.TryGetValue(CacheKeys.Quotes, out list))
-        //    {
-
-        //        var cacheEntryOptions = new MemoryCacheEntryOptions()
-        //             .SetSlidingExpiration(TimeSpan.FromHours(1))
-        //             .AddExpirationToken(new CancellationChangeToken(new CancellationTokenSource(TimeSpan.FromHours(1)).Token));
-        //        Dependencies.MemoryCache.Set(CacheKeys.Quotes, list, cacheEntryOptions);
-        //    }
-        //}
-
         public static List<Quote> Quotes
         {
             get

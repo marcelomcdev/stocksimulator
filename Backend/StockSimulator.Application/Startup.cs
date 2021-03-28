@@ -59,17 +59,6 @@ namespace StockSimulator.Application
             services.AddDbContext<StockContext>(option => option.UseSqlServer(ConnectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
 
             services.AddCors();
-            //services.AddCors(options => 
-            //{
-            //    options.AddPolicy("CorsPolicy", builder =>
-            //    builder
-            //    .WithOrigins("http://localhost:4200/")
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader()
-            //    .AllowCredentials()
-            //    );
-                
-            //});
 
             services.AddSignalR();
 
@@ -179,8 +168,6 @@ namespace StockSimulator.Application
             });
 
             #endregion
-
-           // app.UseCors("CorsPolicy");
 
             app.UseCors(c =>
             {

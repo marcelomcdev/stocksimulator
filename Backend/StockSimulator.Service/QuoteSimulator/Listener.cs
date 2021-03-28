@@ -20,7 +20,6 @@ namespace StockSimulator.Service.QuoteSimulator
 
         }
 
-        //private MemoryCache _cache;
         public dynamic Item { get; set; }
         public List<Quote> Items { get; set; }
         public bool Started { get; set; }
@@ -115,26 +114,7 @@ namespace StockSimulator.Service.QuoteSimulator
         public IEnumerable<dynamic> GetMostTradedOperations(int max)
         {
             IEnumerable<dynamic> querybase = null;
-            if (Items != null)
-            {
-                querybase = (from t in ((from o in Items
-                                         where o.Timestamp >= Convert.ToDateTime(Convert.ToDateTime(DateTime.Now)).AddDays(-7) && o.Timestamp <= DateTime.Now
-                                         group o by new { o.Name } into g
-                                         select new
-                                         {
-                                             g.Key.Name,
-                                             Total = g.Count()
-                                         }))
-                             orderby t.Total descending
-                             select new
-                             {
-                                 Symbol = t.Name,
-                                 Total = t.Total,
-                                 CurrentPrice = Items?.Where(f => f.Name.Equals(t.Name))?.OrderByDescending(f => f.Timestamp)?.FirstOrDefault()?.Value ?? 0M
-                             })
-                             .Take(max);
-            }
-
+            querybase = new StockSimulator.CrossCutting.Business.TradeOperations().GetMostTradedOperations(Items, max);
             return querybase;
         }
 
