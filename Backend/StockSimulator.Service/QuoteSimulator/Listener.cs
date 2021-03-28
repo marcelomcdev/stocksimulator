@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using StockSimulator.Domain.Cache;
 using StockSimulator.Domain.Interfaces.Services;
 using StockSimulator.Domain.ValuableObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -19,8 +21,8 @@ namespace StockSimulator.Service.QuoteSimulator
         }
 
         private MemoryCache _cache;
-        
 
+        
 
         public void StopListening()
         {
@@ -29,6 +31,7 @@ namespace StockSimulator.Service.QuoteSimulator
 
         public dynamic Item { get; set; }
         public List<Quote> Items { get; set; }
+        public bool Started { get; set; }
 
         private Task listenTask;
         private CancellationTokenSource src = new CancellationTokenSource();
@@ -77,18 +80,26 @@ namespace StockSimulator.Service.QuoteSimulator
 
         public async Task<dynamic> Listen(string url)
         {
+            
+
             if (String.IsNullOrEmpty(url) || String.IsNullOrWhiteSpace(url))
                 throw new Exception("A url is required");
+
+            Started = true;
 
             ClientWebSocket socket = new ClientWebSocket();
             listenTask = Task.Run(async () =>
             {
                 try
                 {
+                    
+
                     bool notFound = true;
                     byte[] buffer = new byte[1024];
                     await socket.ConnectAsync(new Uri(url), CancellationToken.None);
                     Items = new List<Quote>();
+
+                    
 
                     while (true)
                     {
@@ -100,9 +111,6 @@ namespace StockSimulator.Service.QuoteSimulator
                         Item = quote;
 
                         Items.Add(quote);
-
-                        // Console.WriteLine(data);
-                        //stock, value, timestamp, redundant
                     }
                 }
                 catch (Exception ex)
@@ -114,6 +122,31 @@ namespace StockSimulator.Service.QuoteSimulator
             return Item;
         }
 
+        public IEnumerable<dynamic> GetMostTradedOperations(int max)
+        {
+            IEnumerable<dynamic> querybase = null;
+            if (Items != null)
+            {
+                querybase = (from t in ((from o in Items
+                                         where o.Timestamp >= Convert.ToDateTime(Convert.ToDateTime(DateTime.Now)).AddDays(-7) && o.Timestamp <= DateTime.Now
+                                         group o by new { o.Name } into g
+                                         select new
+                                         {
+                                             g.Key.Name,
+                                             Total = g.Count()
+                                         }))
+                             orderby t.Total descending
+                             select new
+                             {
+                                 Symbol = t.Name,
+                                 Total = t.Total,
+                                 CurrentPrice = Items?.Where(f => f.Name.Equals(t.Name))?.OrderByDescending(f => f.Timestamp)?.FirstOrDefault()?.Value ?? 0M
+                             })
+                             .Take(max);
+            }
+
+            return querybase;
+        }
 
         public Quote ConvertToQuote(object obj)
         {

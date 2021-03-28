@@ -12,8 +12,10 @@ using Microsoft.IdentityModel.Tokens;
 using StockSimulator.Application.Helpers.Identity;
 using StockSimulator.CrossCutting.Business;
 using StockSimulator.CrossCutting.Configuration;
+using StockSimulator.CrossCutting.DependencyInjection;
 using StockSimulator.Data.Context;
 using StockSimulator.Data.Repository;
+using StockSimulator.Domain.DependencyInjection;
 using StockSimulator.Domain.Entities;
 using StockSimulator.Domain.Interfaces.Business;
 using StockSimulator.Domain.Interfaces.Repository;
@@ -56,17 +58,18 @@ namespace StockSimulator.Application
 
             services.AddDbContext<StockContext>(option => option.UseSqlServer(ConnectionString, m => m.MigrationsAssembly("StockSimulator.Data")));
 
-            services.AddCors(options => 
-            {
-                options.AddPolicy("CorsPolicy", builder =>
-                builder
-                .WithOrigins("http://locahost:4200")
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()
-                );
+            services.AddCors();
+            //services.AddCors(options => 
+            //{
+            //    options.AddPolicy("CorsPolicy", builder =>
+            //    builder
+            //    .WithOrigins("http://localhost:4200/")
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader()
+            //    .AllowCredentials()
+            //    );
                 
-            });
+            //});
 
             services.AddSignalR();
 
@@ -129,10 +132,12 @@ namespace StockSimulator.Application
             services.AddScoped<IOperationRepository, OperationRepository>();
             services.AddScoped<IOperationService, OperationService>();
 
-            services.AddScoped<IListenerService, Listener>();
+            services.AddSingleton<IListenerService, Listener>();
             services.AddScoped<ITradeOperations, TradeOperations>();
 
             services.AddControllers();
+
+            Dependencies.Resolver = new Resolver(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -175,7 +180,17 @@ namespace StockSimulator.Application
 
             #endregion
 
-            app.UseCors("CorsPolicy");
+           // app.UseCors("CorsPolicy");
+
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowCredentials();
+                c.WithOrigins("http://localhost:4200");
+                c.WithExposedHeaders("Content-Disposition");
+            });
+
 
             //app.UseHttpsRedirection();
             app.UseHttpMethodOverride();
@@ -191,6 +206,7 @@ namespace StockSimulator.Application
                 endpoints.MapControllers();
                 endpoints.MapHub<ChartHub>("/chart");
             });
+
         }
 
 

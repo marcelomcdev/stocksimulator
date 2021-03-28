@@ -1,3 +1,4 @@
+import { ImageLogoComponent } from './components/image-logo/image-logo.component';
 import { TradeService } from './services/trade.service';
 import { TradeComponent } from './components/trade/trade.component';
 import { GuardaRotas } from './authorization/guarda.rotas';
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     AppRoutingModule,
     HttpClientModule,
+    ChartsModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

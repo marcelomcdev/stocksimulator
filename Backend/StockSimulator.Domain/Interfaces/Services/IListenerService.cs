@@ -12,7 +12,9 @@ namespace StockSimulator.Domain.Interfaces.Services
         Task<dynamic> Listen(string url);
         void StopListening();
         public dynamic Item { get; set; }
+        public bool Started { get; set; }
         public List<Quote> Items { get; set; }
+        IEnumerable<dynamic> GetMostTradedOperations(int max);
 
     }
 }

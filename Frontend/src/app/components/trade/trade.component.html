@@ -3,24 +3,44 @@
   Lista de ativos mais negociados
 </h4>
 
-<p *ngIf="!trades">Carregando ativos...</p>
+<!-- <div *ngIf="!signalRService.trades" class="spinner-border text-primary" role="status">
+  <span  class="visually-hidden"></span>
+</div> -->
 
-<table class="table table-hover">
+<!-- <p class="" *ngIf="!signalRService.trades">Carregando ativos...</p> -->
+
+<!-- <button *ngIf="!signalRService.trades" class="btn btn-primary" type="button" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  <span class="visually-hidden">&nbsp;Carregando ativos...</span>
+</button> -->
+
+<div *ngIf="!signalRService.trades" class="alert alert-warning" role="alert">
+
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  <span class="visually-hidden">&nbsp;Carregando ativos...</span>
+
+</div>
+
+
+<table class="table table-hover table-sm">
   <thead>
     <tr>
       <th scope="col">Simbolo</th>
       <th scope="col">Valor Atual</th>
-      <!-- <th scope="col">Operacao</th> -->
+      <!-- <th scope="col">Total</th> -->
+      <th scope="col">Operação</th>
     </tr>
   </thead>
-  <tbody *ngFor="let t of trades">
+  <!-- <tbody *ngFor="let t of trades"> -->
+    <tbody *ngFor="let t of signalRService.trades">
       <tr>
-        <td>{{ t.symbol }}</td>
-        <td>{{ t.currentPrice }}</td>
-        <!-- <td>
-          <button type="button" class="btn btn-success m-1">Comprar</button>
-          <button type="button" class="btn btn-danger m-1">Vender</button>
-        </td> -->
+        <td>{{ t.symbol }} <span class="badge rounded-pill bg-primary">{{ t.total }}</span> </td>
+        <td><span style='font-weight:bold'>{{ t.currentPrice }}</span></td>
+        <!-- <td>{{ t.total }}</td> -->
+        <td>
+          <button type="button" class="btn btn-success m-1  btn-sm"><i class="fa fa-bars"></i>Comprar</button>
+          <button type="button" class="btn btn-danger m-1 btn-sm">Vender</button>
+        </td>
       </tr>
   </tbody>
 </table>
