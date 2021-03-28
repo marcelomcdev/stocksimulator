@@ -20,21 +20,18 @@ namespace StockSimulator.Service.QuoteSimulator
 
         }
 
-        private MemoryCache _cache;
+        //private MemoryCache _cache;
+        public dynamic Item { get; set; }
+        public List<Quote> Items { get; set; }
+        public bool Started { get; set; }
+        private Task listenTask;
+        private CancellationTokenSource src = new CancellationTokenSource();
 
-        
 
         public void StopListening()
         {
             this.src.Cancel();
         }
-
-        public dynamic Item { get; set; }
-        public List<Quote> Items { get; set; }
-        public bool Started { get; set; }
-
-        private Task listenTask;
-        private CancellationTokenSource src = new CancellationTokenSource();
 
         public async Task<dynamic> Listen(string url, string filter)
         {
@@ -80,8 +77,6 @@ namespace StockSimulator.Service.QuoteSimulator
 
         public async Task<dynamic> Listen(string url)
         {
-            
-
             if (String.IsNullOrEmpty(url) || String.IsNullOrWhiteSpace(url))
                 throw new Exception("A url is required");
 
@@ -92,20 +87,15 @@ namespace StockSimulator.Service.QuoteSimulator
             {
                 try
                 {
-                    
-
                     bool notFound = true;
                     byte[] buffer = new byte[1024];
                     await socket.ConnectAsync(new Uri(url), CancellationToken.None);
                     Items = new List<Quote>();
 
-                    
-
                     while (true)
                     {
                         WebSocketReceiveResult result = await socket.ReceiveAsync(buffer, CancellationToken.None);
                         string data = Encoding.UTF8.GetString(buffer, 0, result.Count);
-
                         var obj = JsonConvert.DeserializeObject(data);
                         var quote = ConvertToQuote(obj);
                         Item = quote;
@@ -115,7 +105,7 @@ namespace StockSimulator.Service.QuoteSimulator
                 }
                 catch (Exception ex)
                 {
-                    //treat exception
+                    throw new Exception(ex.Message);
                 }
             }, src.Token);
 

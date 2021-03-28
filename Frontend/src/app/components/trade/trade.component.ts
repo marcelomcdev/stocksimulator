@@ -19,13 +19,7 @@ export class TradeComponent implements OnInit {
   ngOnInit() {
     this.signalRService.startConnection();
     this.signalRService.addTransferChartDataListenerToTrade();
-    this.startListening();
     this.startHttpRequest();
-  }
-
-  private startListening = () => {
-    this.http.get('https://localhost:5001/api/chart/listen')
-    .subscribe(res => { console.log(res) });
   }
 
   private startHttpRequest = () => {

@@ -30,7 +30,6 @@ namespace StockSimulator.Application.Controllers
         [HttpGet("listen")]
         public IActionResult Listen()
         {           
-            //_listenerService.Listen("ws://localhost:8080/quotes");
             return Ok(new { Message = "Request Completed" });
         }
 
@@ -40,10 +39,8 @@ namespace StockSimulator.Application.Controllers
             if (!_listenerService.Started)
             {
                 _listenerService.Listen("ws://localhost:8080/quotes");
-
                 var timerManager = new TimerManager(() => _hub.Clients.All.SendAsync("transferchartdata", _listenerService.GetMostTradedOperations(5)), 3);
             }
-
             return Ok(new { Message = "Request Completed" });
         }
     }
