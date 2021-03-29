@@ -25,13 +25,14 @@
 }
 
 .borda{
-  border:1px solid gray;
+  border:1px solid lightgray;
   height: auto;
   padding-top: 50px;
   padding-bottom: 50px;
   margin-left: 200px;
   margin-right: 200px;
   margin-top: 100px;
-  border-radius: 0.3em;
-
+  border-radius: 1.3em;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 }
