@@ -1,7 +1,8 @@
 
-<h4>
-  Lista de ativos mais negociados
-</h4>
+
+<div class="card">
+  <h5 class="card-header"> Ativos mais negociados</h5>
+  <div class="card-body">
 
 <!-- <div *ngIf="!signalRService.trades" class="spinner-border text-primary" role="status">
   <span  class="visually-hidden"></span>
@@ -22,25 +23,96 @@
 </div>
 
 
-<table class="table table-hover table-sm">
+<table class="table table-sm ">
   <thead>
     <tr>
       <th scope="col">Ativo</th>
       <th scope="col">Valor Atual</th>
-      <!-- <th scope="col">Total</th> -->
       <th scope="col">Operação</th>
     </tr>
   </thead>
-  <!-- <tbody *ngFor="let t of trades"> -->
     <tbody *ngFor="let t of signalRService.trades">
       <tr>
         <td>{{ t.symbol }} <span class="badge rounded-pill bg-primary">{{ t.total }}</span> </td>
         <td><span style='font-weight:bold'>{{ t.currentPrice }}</span></td>
-        <!-- <td>{{ t.total }}</td> -->
         <td>
-          <button type="button" class="btn btn-success m-1  btn-sm"><i class="fa fa-bars"></i>Comprar</button>
-          <button type="button" class="btn btn-danger m-1 btn-sm">Vender</button>
+          <button type="button" class="btn btn-success m-1 btn-sm" (click)='open(content,t)'><i class="fa fa-clone"></i>&nbsp;Comprar</button>
+          <button type="button" class="btn btn-danger m-1 btn-sm" ><i class="fa fa-clipboard"></i>&nbsp;Vender</button>
         </td>
       </tr>
   </tbody>
 </table>
+
+</div>
+
+</div>
+
+<!-- <app-modal #modalBuyTrade [modalConfig]="modalConfig">
+
+
+  <form>
+    <div class="form-group">
+
+      <label>Ativo: <b>{{currentTrade.symbol}}</b></label><BR>
+
+      <label for="quantity">Quantidade de Ativos</label>
+      <div class="input-group">
+        <input id="quantity" name="quantity" class="form-control" type="number" required minlength="1" [(ngModel)]="quantity" #name="ngModel"  >
+      </div>
+
+      <label style="font-weight: bold;">Valor: R$ {{ calculate(currentTrade.currentPrice,  1) }}</label><BR>
+
+      <label style="font-weight: bold;">Total: R$ {{ calculate(currentTrade.currentPrice,  quantity) }}</label><BR>
+    </div>
+  </form>
+
+</app-modal> -->
+
+
+<ng-template #content let-modal>
+  <div class="modal-header alert-warning alert-darkblue text-light">
+    <h4 class="modal-title" id="modal-basic-title">Comprar Ativo</h4>
+    <button type="button" class="close text-light" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+
+        <label>Ativo: <b>{{currentTrade.symbol}}</b></label><BR>
+
+        <label for="quantity">Quantidade</label>
+        <div class="input-group">
+          <input id="quantity" name="qte"
+          class="form-control mb-2"
+          type="number"
+          required minlength="1"
+          [(ngModel)]="quantity"
+          #qte="ngModel"
+          [ngClass]="{
+            'is-invalid':qte.invalid && (qte.dirty || qte.touched),
+            'is-valid': qte.valid && (qte.dirty || qte.touched)
+          }"
+           >
+        </div>
+
+        <div class="invalid-feedback mb-2" *ngIf="qte.invalid && (qte.dirty || qte.touched)">
+          <div *ngIf="qte.errors.required">
+            O valor deve ser preenchido!
+          </div>
+        </div>
+
+        <label style="font-weight: bold;">Valor: R$ {{ calculate(currentTrade.currentPrice,  1) }}</label><BR>
+
+        <label style="font-weight: bold;">Total: R$ {{ calculate(currentTrade.currentPrice,  quantity) }}</label><BR>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info text-light" (click)="modal.close('Save click')">Salvar</button>
+    <button type="button" class="btn btn-danger text-light" (click)="modal.dismiss('Sair click')">Sair</button>
+  </div>
+</ng-template>
+
+

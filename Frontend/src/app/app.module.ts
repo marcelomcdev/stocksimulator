@@ -1,4 +1,6 @@
-import { ImageLogoComponent } from './components/image-logo/image-logo.component';
+import { ModalFormService } from './services/modal-service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ImageLogoComponent } from './shared/image-logo/image-logo.component';
 import { TradeService } from './services/trade.service';
 import { TradeComponent } from './components/trade/trade.component';
 import { GuardaRotas } from './authorization/guarda.rotas';
@@ -14,8 +16,10 @@ import { HomeComponent } from './components/home/home.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { ChartsModule } from 'ng2-charts';
+import { ModalComponent } from './shared/modal/modal.component';
+import { BuyTradeComponent } from './components/buy-trade/buy-trade.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +27,17 @@ import { ChartsModule } from 'ng2-charts';
     HomeComponent,
     LoginComponent,
     NavMenuComponent,
-    TradeComponent
+    TradeComponent,
+    ModalComponent,
+    BuyTradeComponent,
    ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     AppRoutingModule,
     HttpClientModule,
     ChartsModule,
+    FormsModule,
+    NgbModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -39,7 +47,8 @@ import { ChartsModule } from 'ng2-charts';
       //{ path: 'novo-usuario', component: CadastoUsuarioComponent }
     ])
   ],
-  providers: [UserService, TradeService],
-  bootstrap: [AppComponent]
+  providers: [UserService, TradeService, ModalFormService],
+  bootstrap: [AppComponent],
+  entryComponents: [ BuyTradeComponent ]
 })
 export class AppModule { }
