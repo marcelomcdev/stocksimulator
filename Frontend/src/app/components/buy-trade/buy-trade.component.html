@@ -1,0 +1,20 @@
+
+
+
+<form>
+  <div class="form-group">
+
+    <label>Ativo: <b>{{currentTrade.symbol}}</b></label><BR>
+
+    <label for="quantity">Quantidade de Ativos</label>
+    <div class="input-group">
+      <input id="quantity" name="quantity" class="form-control" type="number" required minlength="1" [(ngModel)]="quantity" #name="ngModel"  >
+    </div>
+
+    <label style="font-weight: bold;">Valor: R$ {{ calculate(currentTrade.currentPrice,  1) }}</label><BR>
+
+    <label style="font-weight: bold;">Total: R$ {{ calculate(currentTrade.currentPrice,  quantity) }}</label><BR>
+  </div>
+</form>
+
+
