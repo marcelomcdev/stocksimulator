@@ -52,13 +52,12 @@ export class UserService {
   }
 
   public createUser(user: User) : Observable<User> {
-    //const headers = new HttpHeaders().set('content-type', 'application/json');
+
     const body = {
       name: user.name,
       email: user.email,
       password: user.senha,
       confirmpassword: user.senha,
-      //username: user.username,
       cpf: user.cpf,
     }
 
