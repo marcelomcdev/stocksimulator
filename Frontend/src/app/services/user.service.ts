@@ -57,12 +57,12 @@ export class UserService {
       name: user.name,
       email: user.email,
       password: user.senha,
-      confirmpassword: true,
-      username: user.username,
+      confirmpassword: user.senha,
+      //username: user.username,
       cpf: user.cpf,
     }
 
-    return this.http.post<User>(this.baseURL + 'api/auth/sign_up', body, {headers : this.headers});
+    return this.http.post<User>(`${this.baseURL}api/auth/sign_up`, body, {headers : this.headers});
 
   }
 

@@ -33,6 +33,7 @@ export class TradeService implements OnInit {
   }
 
 
+
   // liveData$ = this.wsService.messages$.pipe(
   //   map(rows => rows.data),
   //   catchError(error => { throw error }),

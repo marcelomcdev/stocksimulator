@@ -1,3 +1,4 @@
+import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { ModalFormService } from './services/modal-service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ImageLogoComponent } from './shared/image-logo/image-logo.component';
@@ -30,6 +31,7 @@ import { BuyTradeComponent } from './components/buy-trade/buy-trade.component';
     TradeComponent,
     ModalComponent,
     BuyTradeComponent,
+    RegisterUserComponent,
    ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -44,7 +46,7 @@ import { BuyTradeComponent } from './components/buy-trade/buy-trade.component';
       { path: 'entrar', component: LoginComponent },
       //{ path: 'acoes', component: TradeComponent },
       { path: 'acoes', component: TradeComponent, canActivate: [GuardaRotas] },
-      //{ path: 'novo-usuario', component: CadastoUsuarioComponent }
+      { path: 'novo-usuario', component: RegisterUserComponent }
     ])
   ],
   providers: [UserService, TradeService, ModalFormService],
