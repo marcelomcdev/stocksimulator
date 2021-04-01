@@ -1,0 +1,160 @@
+<div class="borda">
+
+
+
+  <div class="text-center">
+    <form class="form-signin">
+      <h4 class="mb3">Criar Conta</h4>
+      <label for="inpuEmail" class="sr-only">Email</label>
+      <input type="text" id="inputEmail"
+      name="email" placeholder="Informe seu e-mail"
+      class="form-control mb-2"
+      [ngClass] = "{
+        'is-invalid':email.invalid && (email.dirty || email.touched),
+        'is-valid': email.valid && (email.dirty || email.touched)
+      }"
+      [(ngModel)]="usuario.email"
+      #email="ngModel"
+      required
+      >
+
+      <div class="invalid-feedback mb-2" *ngIf="email.invalid && (email.dirty || email.touched)">
+        <div *ngIf="email.errors.required">
+          E-mail deve ser preenchido!
+        </div>
+        <div *ngIf="email.errors.email">
+          E-mail está no formato inválido!
+        </div>
+      </div>
+
+
+      <label for="inpuPassword" class="sr-only">Senha</label>
+      <input type="password" id="inputSenha"
+      name="senha" placeholder="Senha"
+      class="form-control mb-2"
+      #senha="ngModel"
+      [ngClass] = "{
+        'is-invalid':senha.invalid && (senha.dirty || senha.touched),
+        'is-valid': senha.valid && (senha.dirty || senha.touched)
+      }"
+      [(ngModel)]="usuario.senha"
+      required
+      >
+
+      <div class="invalid-feedback mb-2" *ngIf="senha.invalid && (senha.dirty || senha.touched)">
+        <div *ngIf="senha.errors.required">
+          Senha deve ser preenchida!
+        </div>
+
+      </div>
+
+
+      <!-- <label for="inpuPassword" class="sr-only">Confirmar Senha</label>
+      <input type="password" id="inputSenha"
+      name="confirmasenha" placeholder="Confirme a Senha"
+      class="form-control mb-2"
+      #senha="ngModel"
+      [ngClass] = "{
+        'is-invalid':senha.invalid && (senha.dirty || senha.touched),
+        'is-valid': senha.valid && (senha.dirty || senha.touched)
+      }"
+      [(ngModel)]="user.senha"
+      required
+      >
+
+      <div class="invalid-feedback mb-2" *ngIf="senha.invalid && (senha.dirty || senha.touched)">
+        <div *ngIf="senha.errors.required">
+          Senha deve ser preenchida!
+        </div>
+
+      </div> -->
+
+
+
+      <label for="inputNome" class="sr-only">Nome</label>
+      <input type="text" id="inputNome"
+      name="name" placeholder="Informe seu nome"
+      class="form-control mb-2"
+      [ngClass] = "{
+        'is-invalid':name.invalid && (name.dirty || name.touched),
+        'is-valid': name.valid && (name.dirty || name.touched)
+      }"
+      [(ngModel)]="usuario.name"
+      #name="ngModel"
+      required
+      >
+
+      <div class="invalid-feedback mb-2" *ngIf="name.invalid && (name.dirty || name.touched)">
+        <div *ngIf="name.errors.required">
+          Nome deve ser preenchido!
+        </div>
+        <div *ngIf="name.errors.name">
+          Nome está no formato inválido!
+        </div>
+      </div>
+
+
+      <label for="inputUsername" class="sr-only">Nome de Usuário</label>
+      <input type="text" id="inputUsername"
+      name="username" placeholder="Informe seu nome de usuário"
+      class="form-control mb-2"
+      [ngClass] = "{
+        'is-invalid':username.invalid && (username.dirty || username.touched),
+        'is-valid': username.valid && (username.dirty || username.touched)
+      }"
+      [(ngModel)]="usuario.username"
+      #username="ngModel"
+      required
+      >
+
+      <div class="invalid-feedback mb-2" *ngIf="username.invalid && (username.dirty || username.touched)">
+        <div *ngIf="username.errors.required">
+          Nome de usuário deve ser preenchido!
+        </div>
+        <div *ngIf="username.errors.name">
+          Nome de usuário está no formato inválido!
+        </div>
+      </div>
+
+      <label for="inputCPF" class="sr-only">CPF</label>
+      <input type="text" id="inputCPF"
+      name="cpf" placeholder="Informe seu CPF"
+      class="form-control mb-2"
+      [ngClass] = "{
+        'is-invalid':cpf.invalid && (cpf.dirty || cpf.touched),
+        'is-valid': cpf.valid && (cpf.dirty || cpf.touched)
+      }"
+      [(ngModel)]="usuario.cpf"
+      #cpf="ngModel"
+      required
+      >
+
+      <div class="invalid-feedback mb-2" *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)">
+        <div *ngIf="cpf.errors.required">
+          CPF deve ser preenchido!
+        </div>
+        <div *ngIf="cpf.errors.name">
+          CPF está no formato inválido!
+        </div>
+      </div>
+
+
+      <button class="btn btn-primary btn-block mb-3" type="submit" (click)="registerUser()" >
+        Cadastrar
+      </button>
+
+      <a [routerLink]='["/entrar"]'>Voltar</a>
+
+      <!-- <div>
+        Novo por aqui? <a [routerLink]='["/novo-usuario"]'>Cadastre-se</a>
+      </div> -->
+
+      <div class="alert alert-danger" *ngIf="mensagem">
+        {{ mensagem }}
+      </div>
+
+    </form>
+  </div>
+
+
+  </div>
