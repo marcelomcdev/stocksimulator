@@ -39,7 +39,7 @@ namespace StockSimulator.CrossCutting.Business
             if (quotes != null)
             {
                 querybase = (from t in ((from o in quotes
-                                         where o.Timestamp >= Convert.ToDateTime(Convert.ToDateTime(DateTime.Now)).AddDays(-37) && o.Timestamp <= DateTime.Now
+                                         where o.Timestamp >= Convert.ToDateTime(Convert.ToDateTime(DateTime.Now)).AddDays(-7) && o.Timestamp <= DateTime.Now
                                          group o by new { o.Name } into g
                                          select new
                                          {
