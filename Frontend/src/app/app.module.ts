@@ -15,7 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { ChartsModule } from 'ng2-charts';
@@ -39,8 +39,8 @@ import { BuyTradeComponent } from './components/buy-trade/buy-trade.component';
     HttpClientModule,
     ChartsModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
-    FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'entrar', component: LoginComponent },

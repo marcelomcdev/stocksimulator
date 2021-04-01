@@ -7,22 +7,22 @@
       <h4 class="mb3">Criar Conta</h4>
       <label for="inpuEmail" class="sr-only">Email</label>
       <input type="text" id="inputEmail"
-      name="email" placeholder="Informe seu e-mail"
-      class="form-control mb-2"
-      [ngClass] = "{
-        'is-invalid':email.invalid && (email.dirty || email.touched),
-        'is-valid': email.valid && (email.dirty || email.touched)
-      }"
-      [(ngModel)]="usuario.email"
-      #email="ngModel"
-      required
-      >
+    name="email" placeholder="Informe seu e-mail"
+    class="form-control mb-2"
+    [ngClass] = "{
+      'is-invalid':email.invalid && (email.dirty || email.touched),
+      'is-valid': email.valid && (email.dirty || email.touched)
+    }"
+    [(ngModel)]="usuario.email"
+    #email="ngModel"
+    required
+    >
 
       <div class="invalid-feedback mb-2" *ngIf="email.invalid && (email.dirty || email.touched)">
         <div *ngIf="email.errors.required">
           E-mail deve ser preenchido!
         </div>
-        <div *ngIf="email.errors.email">
+        <div *ngIf="email.errors?.email">
           E-mail está no formato inválido!
         </div>
       </div>
@@ -39,36 +39,19 @@
       }"
       [(ngModel)]="usuario.senha"
       required
+      minlength="8"
       >
 
       <div class="invalid-feedback mb-2" *ngIf="senha.invalid && (senha.dirty || senha.touched)">
         <div *ngIf="senha.errors.required">
-          Senha deve ser preenchida!
+          A senha deve ser preenchida!
+        </div>
+
+        <div *ngIf="senha.errors?.minlength">
+          A senha deve ter ao menos 8 dígitos!
         </div>
 
       </div>
-
-
-      <!-- <label for="inpuPassword" class="sr-only">Confirmar Senha</label>
-      <input type="password" id="inputSenha"
-      name="confirmasenha" placeholder="Confirme a Senha"
-      class="form-control mb-2"
-      #senha="ngModel"
-      [ngClass] = "{
-        'is-invalid':senha.invalid && (senha.dirty || senha.touched),
-        'is-valid': senha.valid && (senha.dirty || senha.touched)
-      }"
-      [(ngModel)]="user.senha"
-      required
-      >
-
-      <div class="invalid-feedback mb-2" *ngIf="senha.invalid && (senha.dirty || senha.touched)">
-        <div *ngIf="senha.errors.required">
-          Senha deve ser preenchida!
-        </div>
-
-      </div> -->
-
 
 
       <label for="inputNome" class="sr-only">Nome</label>
@@ -127,19 +110,24 @@
       [(ngModel)]="usuario.cpf"
       #cpf="ngModel"
       required
+      minlength="11"
       >
 
       <div class="invalid-feedback mb-2" *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)">
         <div *ngIf="cpf.errors.required">
           CPF deve ser preenchido!
         </div>
-        <div *ngIf="cpf.errors.name">
+        <div *ngIf="cpf.errors.cpf">
           CPF está no formato inválido!
+        </div>
+
+        <div *ngIf="cpf.errors?.minlength">
+          O CPF deve ter ao menos 11 dígitos!
         </div>
       </div>
 
 
-      <button class="btn btn-primary btn-block mb-3" type="submit" (click)="registerUser()" >
+      <button class="btn btn-primary btn-block mb-3" type="submit" (click)="registerUser()" [disabled]="email.errors?.required || senha.errors?.required || name.errors?.required || username.errors?.required || cpf.errors?.required" >
         Cadastrar
       </button>
 
