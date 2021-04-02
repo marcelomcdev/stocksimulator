@@ -1,7 +1,7 @@
 # Stock Simulator
 Stock buy and sell simulator
 
-![Screenshot](/marcelomcdev/stocksimulator/blob/master/readme-img/app-login.png?raw=true)
+![Screenshot](https://github.com/marcelomcdev/stocksimulator/blob/master/readme-img/app-login.png)
 
 # Dependencies and tools installation
 Before you start, using a command line software (like Windows Powershell as example), on the backend's folder, use the <code>dotnet restore</code> command to restore the existing dependencies and tools.
